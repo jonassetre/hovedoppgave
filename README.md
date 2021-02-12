@@ -1,0 +1,2 @@
+# hovedoppgave
+Bachelor i Datateknikk
