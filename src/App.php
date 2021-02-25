@@ -3,7 +3,7 @@
 include_once "model/test.php";
 
 
-require_once '../backend/connect.php';
+require_once 'auth_pdo.php';
 
 class App
 {
@@ -18,7 +18,7 @@ class App
     }
 
     function insertSubject($subjectCode, $subjectTitle){
-        $query = $db->prepare(
+        $query = self::prepare(
             'INSERT INTO Subject (subjectCode, subjectTitle)
          VALUES (:subjectCode, :subjectTitle);'
         );
@@ -30,7 +30,7 @@ class App
 
     public function createGroup($groupName, $id_subject): Group{
         try {
-            $stmt = $db->prepare("INSERT INTO `Group`(`groupName`, `Subject_idSubject`)" .
+            $stmt =self::prepare("INSERT INTO `Group`(`groupName`, `Subject_idSubject`)" .
                 "VALUES (:groupName, :id_subject)");
             $stmt->bindParam(":groupName", $groupName, PDO::PARAM_STR);
             $stmt->bindParam(":id_subject", $id_subject, PDO::PARAM_INT);
