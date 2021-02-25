@@ -1,13 +1,12 @@
 <?php
-$servername = "kark.uit.no";
-$username = "stud_v21_bachelorgrp4";
+$host = "kark.uit.no";
+$databaseName = "stud_v21_bachelorgrp4";
+$userName = "stud_v21_bachelorgrp4";
 $password = "grp4Quiz21";
-$dbname = "stud_v21_bachelorgrp4";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    echo "Connected to $dbname at $host successfully.";
+} catch (PDOException $pe) {
+    die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
