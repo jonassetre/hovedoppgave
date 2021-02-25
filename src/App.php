@@ -26,7 +26,6 @@ class App
         $query->execute();
         return 0;
     }
-
 }
 
 
