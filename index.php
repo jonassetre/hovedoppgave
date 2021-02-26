@@ -10,8 +10,7 @@
 
 <body>
 <div class="container">
-
-    <img src="media/mango-matter-1Ms3Zsb1v7g-unsplash.jpg" alt="Home">
+    <img src="mango-matter-1Ms3Zsb1v7g-unsplash.jpg" alt="Home">
     <h1>Velkommen til UiTs spørsmålsbank</h1>
 
     <a class="example_b" onclick="popUpNewSubject()"> + Nytt emne</a>
