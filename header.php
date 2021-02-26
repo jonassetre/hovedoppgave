@@ -10,7 +10,7 @@
 <body>
 <div class="header">
     <div class="headerLogo">
-        <img src="media/UiT_Logo_Bok_2l_Bla_RGB.png" alt="Logo">
+        <img src="UiT_Logo_Bok_2l_Bla_RGB.png" alt="Logo">
     </div>
     <div class="headerOptions">
         <li><a href="logout.php">Logout</a></li>
