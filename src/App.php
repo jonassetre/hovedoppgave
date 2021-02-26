@@ -1,7 +1,17 @@
 <?php
 
 include_once "model/Answer.php";
+include_once "model/Comment.php";
+include_once "model/Group.php";
+include_once "model/Question.php";
+include_once "model/Score.php";
+include_once "model/Subject.php";
+include_once "model/Test.php";
+include_once "model/User.php";
+include_once "model/User_has_Subject.php";
+include_once "model/UserRole.php";
 
+include_once 'NotFoundException.php';
 
 require_once '../backend/connect.php';
 
