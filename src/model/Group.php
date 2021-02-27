@@ -1,11 +1,15 @@
 <?php
 
-class  Group {
+class Group implements JsonSerializable
+{
       private $idGroup;
       private $groupName;
-
       private $subjectId;
 
+      public function jsonSerialize()
+      {
+          return get_object_vars($this);
+      }
 
 
     public function getIdGroup()
@@ -35,7 +39,7 @@ class  Group {
         return $this->subjectId;
     }
 
-    public function setSubjectId($subjectId): void
+    public function setSubjectId($subjectId)
     {
         $this->subjectId = $subjectId;
     }
