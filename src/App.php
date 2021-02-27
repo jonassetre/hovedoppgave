@@ -52,6 +52,23 @@ class App
             print  $e->getMessage(). PHP_EOL;
         }
     }
+
+    public function getAllSubjectGroups($idSubject){
+        try {
+            $stmt = self::prepare("SELECT * FROM Group  WHERE Subject_idSubject = :idSubject");
+            $stmt->bindParam(":idSubject", $idSubject,  PDO::PARAM_INT);
+            $stmt->execute();
+            $i = 0;
+            $groups= [];
+            if ($stmt->rowCount() > 0) {
+                while ($group = $stmt->fetchObject("Group")) {
+                    $groups[$i++] = $group;
+                }
+            }
+        } catch (Exception $e) {
+            print  $e->getMessage(). PHP_EOL;
+        }
+    }
 }
 
 
