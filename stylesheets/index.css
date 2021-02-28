@@ -206,7 +206,6 @@ h2{
     overflow-x: hidden;
     overflow-y: auto;
     background: #8ac1cf;
-    color: #fff;
 }
 
 .sidebar-logo {
@@ -216,6 +215,9 @@ h2{
     text-shadow: 0 0 6px rgb(194, 194, 194);
     -webkit-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+    background-image: url('../add.png');
+    background-position: bottom 6px right 9px;
+    background-repeat: no-repeat;
 }
 
 .sidebar-navigation {

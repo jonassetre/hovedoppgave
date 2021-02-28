@@ -14,9 +14,11 @@
 <body>
 <div class="container">
     <div class="sidebar-container">
-        <div class="sidebar-logo">
+        <div class="sidebar-logo" onclick="popUpNewSubject()">
             Emner
         </div>
+
+        <?php include('./frontend/popupform.html'); ?>
         <ul class="sidebar-navigation">
 
             <li>
@@ -45,6 +47,7 @@
                     <i aria-hidden="true"></i> Emne 5
                 </a>
             </li>
+
         </ul>
     </div>
 
