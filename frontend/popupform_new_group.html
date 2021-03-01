@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create group</title>
+    <link rel="stylesheet" href="../stylesheets/index.css" />
+    <script src="../frontend/subject.js"></script>
+</head>
+<body>
+<div id="id01" class="modal">
+    <form class="modal-content animate" action="#" method="post">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <div class="containerPopup">
+            <h2>Ny gruppe</h2>
+            <label for="groupName"><b>Gruppenavn</b></label>
+            <label>
+                <input type="text" placeholder="Skriv gruppenavn" name="groupName" required>
+            </label>
+                <input type="hidden" name="Subject_idSubject" required>
+
+
+            <button id="button1" type="submit" >Lagre</button>
+            <button id="button2" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Avbryt</button>
+        </div>
+    </form>
+</div>
+</body>
