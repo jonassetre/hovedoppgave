@@ -1,5 +1,4 @@
 <?php
-
 include_once "model/Answer.php";
 include_once "model/Comment.php";
 include_once "model/Group.php";
@@ -27,11 +26,35 @@ class App
         return self::$db->prepare($statement);
     }
 
-    function insertSubject($subjectCode, $subjectTitle){
+    public function redirect($msg, $destination) {
+        echo "<script type='text/javascript'>alert('$msg');location='$destination';</script>";
+        return 0;
+    }
+
+    public function alert($msg) {
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+        return 0;
+    }
+
+    public function createSubject($subjectCode, $subjectTitle){
         try {
+            //Sjekker om et emne med valgt emnekode allerede eksisterer, om den gjør det så vis en alert og avbryt
+            $stmt = self::prepare(
+                'SELECT * FROM Subject
+                           WHERE subjectCode=:subjectCode'
+            );
+            $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($rows){
+                $this->redirect('Et emne med den emnekoden eksisterer allerede, vennligst benytt en annen emnekode', 'index.php');
+                return -1;
+            }
+
+            //Legger til emnet i databasen
             $stmt = self::prepare(
                 'INSERT INTO Subject (subjectCode, subjectTitle)
-         VALUES (:subjectCode, :subjectTitle);'
+                          VALUES (:subjectCode, :subjectTitle)'
             );
             $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
             $stmt->bindParam(':subjectTitle', $subjectTitle, PDO::PARAM_STR);
