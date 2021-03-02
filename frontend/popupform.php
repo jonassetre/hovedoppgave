@@ -1,5 +1,4 @@
 <!--Popupform is from the website: https://www.w3schools.com/howto/howto_css_login_form.asp-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +37,7 @@
         $subjectName = $_POST['subname'];
         if(!empty($subjectCode) && !empty($subjectName)){
             $app = new App($db);
-            $app->insertSubject($subjectCode, $subjectName);
+            $app->createSubject($subjectCode, $subjectName);
         }
     }
 ?>
