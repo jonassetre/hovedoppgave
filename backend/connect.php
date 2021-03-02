@@ -6,7 +6,6 @@ $password = "grp4Quiz21";
 
 try {
     $db = new PDO("mysql:host=$host;dbname=$databaseName", $userName, $password);
-    echo "Connected to $dbname at $host successfully.";
 } catch (PDOException $pe) {
-    die("Could not connect to the database $dbname :" . $pe->getMessage());
+    die("Could not connect to the database $databaseName :" . $pe->getMessage());
 }

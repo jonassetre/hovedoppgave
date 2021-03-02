@@ -14,7 +14,7 @@
     <h1>Velkommen til UiTs spørsmålsbank</h1>
 
     <a class="example_b" onclick="popUpNewSubject()"> + Nytt emne</a>
-    <?php include('./frontend/popupform.html'); ?>
+    <?php include('./frontend/popupform.php'); ?>
 </div>
 </body>
 </html>
