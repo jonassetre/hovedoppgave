@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id="id01" class="modal">
-    <form class="modal-content animate" action="#" method="post">
+    <form id="createSubject"class="modal-content animate" action="#" method="post">
         <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
         <div class="containerPopup">
             <h2>Nytt emne</h2>
@@ -25,14 +25,14 @@
                 <input type="text" placeholder="Skriv emnenavn" name="subname" required>
             </label>
 
-            <button id="button1" type="submit" >Lagre</button>
-            <button id="button2" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Avbryt</button>
+            <button id="button1" type="submit" name="button1" >Lagre</button>
+            <button id="button2" type="button" name="button2" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Avbryt</button>
         </div>
     </form>
 </div>
 <?php
     require_once 'src/App.php';
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if (isset($_POST['button1'])){
         $subjectCode = $_POST['subcode'];
         $subjectName = $_POST['subname'];
         if(!empty($subjectCode) && !empty($subjectName)){

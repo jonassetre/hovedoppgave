@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create group</title>
     <link rel="stylesheet" href="../stylesheets/index.css" />
+    <script src="../frontend/index.js"></script>
     <script src="../frontend/subject.js"></script>
 </head>
 <body>
@@ -19,19 +20,20 @@
             <input type="text" id="groupName" placeholder="Skriv gruppenavn" name="groupName" required>
         </label>
         <label><input type="" name="Subject_idSubject"></label>
-
-        <button id="btn1" type="submit" >Lagre</button>
-        <button id="btn2" type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Avbryt</button>
+        <button id="btn1" type="submit" name="btn1" >Lagre</button>
+        <button id="btn2" type="button"  name="btn2" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Avbryt</button>
     </div>
 </form>
 
 </div>
+
+
 <?php
 require_once 'src/App.php';
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if (isset($_POST['btn1'])){
     $groupName = $_POST['groupName'];
     $subjectId = $_POST['Subject_idSubject'];
-    if(!empty($groupName) && !empty($subjectId )){
+    if(!empty($groupName) && !empty($subjectId)){
         $app = new App($db);
         $app->createGroup($groupName, $subjectId);
     }
