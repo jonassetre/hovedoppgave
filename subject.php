@@ -1,6 +1,13 @@
 <!--Sidebar is from the website: https://codepen.io/daanvankerkom/pen/bRbKEL-->
 
 <?php require_once 'header.php'; ?>
+<?php include('./frontend/popupform.php'); ?>
+
+<?php
+$stmt = $db->query("SELECT * FROM Subject");
+$subjects = $stmt->fetchAll();
+?>
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -21,35 +28,17 @@
 
         <?php include('frontend/popupform.php'); ?>
         <ul class="sidebar-navigation">
-
-            <li>
-                <a>
-                    <i aria-hidden="true"></i> Emne 1
+            <?php foreach ($subjects as $row){ ?>
+            <li><a href="subject.php?course=<?= $row['idSubject'] ?>"
+                    <i aria-hidden="true"></i>
+                    <?php
+                    echo $row['subjectCode'] . ' ' . $row['subjectTitle'];
+                    ?>
+                    <?php } ?>
                 </a>
             </li>
-            <li>
-                <a >
-                    <i  aria-hidden="true"></i> Emne 2
-                </a>
-            </li>
-
-            <li>
-                <a >
-                    <i  aria-hidden="true"></i> Emne 3
-                </a>
-            </li>
-            <li>
-                <a >
-                    <i  aria-hidden="true"></i> Emne 4
-                </a>
-            </li>
-            <li>
-                <a >
-                    <i aria-hidden="true"></i> Emne 5
-                </a>
-            </li>
-
         </ul>
+
     </div>
 
     <div class="content-container">
@@ -62,19 +51,15 @@
                         </label>
                         <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
                     </form>
-
-
                 <?php include('frontend/popUpGroup.php'); ?>
-
-
             </div>
+
             <div class="jumbotron">
             <div id="firstCont">
                 <h3>Grupper her</h3>
             </div>
 
                 <div id="secondCont">
-
                     <ul >
                         <li><a href="#">Tester</a></li>
                         <li><a href="#">Importere</a></li>
