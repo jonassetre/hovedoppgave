@@ -18,7 +18,7 @@
             Emner
         </div>
 
-        <?php include('./frontend/popupform.html'); ?>
+        <?php include('./frontend/popupform.php'); ?>
         <ul class="sidebar-navigation">
 
             <li>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Popup Login</title>
@@ -30,5 +31,16 @@
         </div>
     </form>
 </div>
+<?php
+    require_once 'src/App.php';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $subjectCode = $_POST['subcode'];
+        $subjectName = $_POST['subname'];
+        if(!empty($subjectCode) && !empty($subjectName)){
+            $app = new App($db);
+            $app->insertSubject($subjectCode, $subjectName);
+        }
+    }
+?>
 </body>
 </html>
