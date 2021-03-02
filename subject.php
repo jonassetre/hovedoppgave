@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Header</title>
-    <script src="./frontend/index.js"></script>
+    <script src="frontend/index.js"></script>
+    <script src="frontend/subject.js"></script>
 
 </head>
 
@@ -18,7 +19,7 @@
             Emner
         </div>
 
-        <?php include('./frontend/popupform.php'); ?>
+        <?php include('frontend/popupform.php'); ?>
         <ul class="sidebar-navigation">
 
             <li>
@@ -54,13 +55,18 @@
     <div class="content-container">
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
-            <div class="jumbotron">
-                <form>
-                    <label>
-                        <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
-                    </label>
-                    <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgrupppe</a>
-                </form>
+            <div class="jumbotron" >
+                    <form >
+                        <label>
+                            <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
+                        </label>
+                        <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
+                    </form>
+
+
+                <?php include('frontend/popUpGroup.php'); ?>
+
+
             </div>
             <div class="jumbotron">
             <div id="firstCont">

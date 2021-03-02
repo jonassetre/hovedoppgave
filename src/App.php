@@ -41,7 +41,7 @@ class App
         }
     }
 
-    public function createGroup($groupName, $id_subject): Group{
+    public function createGroup($groupName, $id_subject){
         try {
             $stmt = self::prepare("INSERT INTO `Group`(`groupName`, `Subject_idSubject`)" .
                 "VALUES (:groupName, :id_subject)");
