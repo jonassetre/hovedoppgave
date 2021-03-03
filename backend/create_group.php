@@ -1,5 +1,5 @@
 <?php
-require_once 'connect.php';
+require_once 'auth_pdo.php';
 require_once 'src/App.php';
 require_once 'src/model/Group.php';
 session_start();
