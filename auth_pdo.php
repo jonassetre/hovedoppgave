@@ -1,5 +1,5 @@
 <?php
-include 'src/App.php';
+include_once 'src/App.php';
 
 define('DB_HOST', 'kark.uit.no');
 define('DB_NAME', 'stud_v21_bachelorgrp4');
