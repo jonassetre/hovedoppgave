@@ -12,7 +12,7 @@ include_once "model/UserRole.php";
 
 include_once 'NotFoundException.php';
 
-require_once 'backend/connect.php';
+require_once 'auth_pdo.php';
 
 class App
 {
