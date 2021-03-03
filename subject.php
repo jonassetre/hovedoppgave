@@ -56,7 +56,8 @@ $subjects = $stmt->fetchAll();
 
             <div class="jumbotron">
             <div id="firstCont">
-                <h3>Grupper her</h3>
+                <h3>G</h3>
+
             </div>
 
                 <div id="secondCont">
@@ -70,7 +71,7 @@ $subjects = $stmt->fetchAll();
             </div>
         </div>
     </div>
-
 </div>
+<?php require_once 'footer.php'; ?>
 </body>
 </html>

@@ -16,5 +16,6 @@
     <a class="example_b" onclick="popUpNewSubject()"> + Nytt emne</a>
     <?php include('./frontend/popupform.php'); ?>
 </div>
+<?php require_once 'footer.php'; ?>
 </body>
 </html>
