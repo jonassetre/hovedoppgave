@@ -1,5 +1,6 @@
 <?php
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,9 @@
 <div class="header">
     <div class="headerLogo" >
         <a href="index.php"> <img src="UiT_Logo_Bok_2l_Bla_RGB.png" alt="Logo"></a>
+    </div>
+    <div class="headerUser" >
+
     </div>
     <div class="headerOptions">
         <li><a href="logout.php">Logout</a></li>

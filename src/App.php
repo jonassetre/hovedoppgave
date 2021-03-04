@@ -100,6 +100,14 @@ class App
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function countSubjectsOfUser(int $User_idUser)  {
+        $stmt = self::prepare("SELECT COUNT(*) AS num_rows FROM User_has_Subject WHERE `User_idUser` = :User_idUser");
+        $stmt->bindParam(":User_idUser", $User_idUser);
+        $stmt -> execute();
+        $count = (int)$stmt->fetchColumn();
+        return $count;
+    }
 }
 
 
