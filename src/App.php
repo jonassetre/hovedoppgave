@@ -93,20 +93,12 @@ class App
         }
     }
 
-    public function getAllSubjectsOfUser() {
-        $stmt = self::prepare("SELECT * FROM Subject WHERE ");
-        $stmt->execute(array());
-        $objects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $objects;
-    }
-
     public function getAllSubjectsOfUserById(int $User_idUser)  {
         $stmt = self::prepare(" SELECT * FROM Subject JOIN User_has_Subject 
              On Subject.idSubject =User_has_Subject.Subject_idSubject WHERE User_has_Subject.User_idUser = :User_idUser");
         $stmt->bindParam(":User_idUser", $User_idUser);
         $stmt->execute();
-        $objects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $objects;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
