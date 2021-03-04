@@ -36,29 +36,44 @@ class App
         return 0;
     }
 
-    public function createSubject($subjectCode, $subjectTitle){
+    public function subjectExists($subjectCode){
+        //Sjekker om et emne med valgt emnekode allerede eksisterer
+        $stmt = self::prepare('SELECT * FROM Subject WHERE subjectCode=:subjectCode');
+        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($rows)
+            return true;
+        else
+            return false;
+    }
+
+    public function getUserIdFromSubjectCode($subjectCode){
+        $stmt = self::prepare('SELECT idSubject FROM Subject WHERE subjectCode=:subjectCode');
+        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+    public function createSubject($subjectCode, $subjectTitle, $userId){
         try {
-            //Sjekker om et emne med valgt emnekode allerede eksisterer, om den gjør det så vis en alert og avbryt
-            $stmt = self::prepare(
-                'SELECT * FROM Subject
-                           WHERE subjectCode=:subjectCode'
-            );
-            $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
-            $stmt->execute();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if($rows){
+            //Viser alert og redirecter om emnekoden allerede er i bruk
+            if($this->subjectExists($subjectCode)){
                 $this->redirect('Et emne med den emnekoden eksisterer allerede, vennligst benytt en annen emnekode', 'index.php');
                 return -1;
             }
 
             //Legger til emnet i databasen
-            $stmt = self::prepare(
-                'INSERT INTO Subject (subjectCode, subjectTitle)
-                          VALUES (:subjectCode, :subjectTitle)'
-            );
+            $stmt = self::prepare('INSERT INTO Subject (subjectCode, subjectTitle) VALUES (:subjectCode, :subjectTitle)');
             $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
             $stmt->bindParam(':subjectTitle', $subjectTitle, PDO::PARAM_STR);
-            return $stmt->execute();
+            $stmt->execute();
+
+            //Gjør pålogget bruker til første medlem av emnet ved å legge de til i User_has_Subject tabellen, owner?
+            $subjectId = $this->getUserIdFromSubjectCode($subjectCode);
+            $stmt = self::prepare('INSERT INTO User_has_Subject (User_idUser, Subject_idSubject) VALUES (:userId, :subjectId)');
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->bindParam(':subjectId', $subjectId, PDO::PARAM_INT);
+            $stmt->execute();
         } catch  (Exception $e) {
             print $e->getMessage(). PHP_EOL;
         }

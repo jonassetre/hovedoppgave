@@ -32,12 +32,18 @@
 </div>
 <?php
     require_once 'src/App.php';
-if (isset($_POST['button1'])){
+
+    if(!isset($_SESSION['user_id'])){
+        header('Location: login.php');
+        exit;
+    }
+
+    if (isset($_POST['button1'])){
         $subjectCode = $_POST['subcode'];
         $subjectName = $_POST['subname'];
         if(!empty($subjectCode) && !empty($subjectName)){
             $app = new App($db);
-            $app->createSubject($subjectCode, $subjectName);
+            $app->createSubject($subjectCode, $subjectName, $_SESSION['user_id']);
         }
     }
 ?>
