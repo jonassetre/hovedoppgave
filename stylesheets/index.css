@@ -199,7 +199,7 @@ h2{
     text-align: center;
 }
 .sidebar-container {
-    width: 220px;
+    width: 250px;
     background: #8ac1cf;
     position: fixed;
     margin: 30px 0;
@@ -237,10 +237,11 @@ h2{
 }
 
 .sidebar-navigation li a {
-    padding: 10px 15px 10px 30px;
+    padding: 6px 15px 5px 30px;
     display: block;
     color: #fff;
     font-size: 14px;
+    text-decoration: none;
 }
 
 .sidebar-navigation li a:active,
@@ -266,7 +267,7 @@ h2{
 }
 
 .content-container {
-    padding-left: 220px;
+    padding-left: 260px;
 }
 
 input[type=text].search {

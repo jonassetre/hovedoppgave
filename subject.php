@@ -1,12 +1,20 @@
 <!--Sidebar is from the website: https://codepen.io/daanvankerkom/pen/bRbKEL-->
+<?php
+session_start();
+require_once 'header.php';
+include ('./frontend/popupform.php');
 
-<?php require_once 'header.php'; ?>
-<?php include('./frontend/popupform.php'); ?>
+if(!isset($_SESSION['user_id'])){
+    header('Location: login.php');
+    exit;
+} ?>
 
 <?php
-$stmt = $db->query("SELECT * FROM Subject");
-$subjects = $stmt->fetchAll();
-?>
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == 'GET') {
+    $User_idUser = $_SESSION['user_id'];
+    $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
+} ?>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -26,10 +34,11 @@ $subjects = $stmt->fetchAll();
             Emner
         </div>
 
-        <?php include('frontend/popupform.php'); ?>
         <ul class="sidebar-navigation">
-            <?php foreach ($subjects as $row){ ?>
-            <li><a href="subject.php?course=<?= $row['idSubject'] ?>"
+            <?php
+            foreach ($subjectsOfUserById as $row){ ?>
+            <li>
+                <a href="subject.php?course=<?= $row['idSubject'] ?>">
                     <i aria-hidden="true"></i>
                     <?php
                     echo $row['subjectCode'] . ' ' . $row['subjectTitle'];
@@ -45,7 +54,7 @@ $subjects = $stmt->fetchAll();
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron" >
-                    <form >
+                    <form>
                         <label>
                             <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
                         </label>
@@ -56,7 +65,8 @@ $subjects = $stmt->fetchAll();
 
             <div class="jumbotron">
             <div id="firstCont">
-                <h3>G</h3>
+
+                <h4>G</h4>
 
             </div>
 
