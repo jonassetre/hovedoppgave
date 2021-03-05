@@ -89,25 +89,15 @@ class App
         } catch (Exception $e) {
             print  $e->getMessage(). PHP_EOL;
         }
-        header("Location: {$_SERVER['HTTP_REFERER']}");
     }
 
     public function getAllSubjectGroups($idSubject){
-        try {
+
             $stmt = self::prepare("SELECT * FROM `Group`  WHERE `Subject_idSubject` =:Subject_idSubject");
-            $stmt->bindParam(":Subject_idSubject", $idSubject,  PDO::PARAM_INT);
+            $stmt->bindParam(":Subject_idSubject", $idSubject, PDO::PARAM_INT);
             $stmt->execute();
-            $i = 0;
-            $groups= [];
-            if ($stmt->rowCount() > 0) {
-                while ($group = $stmt->fetchObject("Group")) {
-                    $groups[$i++] = $group;
-                }
-                return $groups;
-            }
-        } catch (Exception $e) {
-            print  $e->getMessage(). PHP_EOL;
-        }
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     }
 
     public function getAllSubjectsOfUserById(int $User_idUser)  {
