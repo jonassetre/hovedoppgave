@@ -12,7 +12,7 @@ if(!isset($_SESSION['user_id']) && ($_SESSION['Subject_idSubject'])){
 
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
-if ($method == 'POST') {
+if ($method == 'GET') {
     $User_idUser = $_SESSION['user_id'];
     $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
 } ?>
@@ -68,24 +68,8 @@ if ($method == 'POST') {
             <div id="firstCont">
 
                 <h4>Groups</h4>
-                <?php
-                $stmt = new App($db);
-                if(isset($_POST['Subject_idSubject'])) {
-                    $groups = $stmt->getAllSubjectGroups($row['Subject_idSubject'] );
-                    if ($groups != null) {
-                foreach ($groups as $group){ ?>
-                <li>
-                    <a href="subject.php?course=<?= $group['Subject_idSubject'] ?> ?>">
-                        <i aria-hidden="true"></i>
-                    </a>
 
-                    <?php
-                    echo $group['groupName'];
-                    ?>
-                    <?php }
-                    }
-                }?>
-                </li>
+
             </div>
 
                 <div id="secondCont">
