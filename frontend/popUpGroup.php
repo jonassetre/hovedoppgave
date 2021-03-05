@@ -13,14 +13,15 @@
 
 <?php
 require_once 'src/App.php';
+$User_idUser = $_SESSION['user_id'];
+$subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!isset($_SESSION['user_id'])){
         header('Location: login.php');
         exit;
     }
-    $User_idUser = $_SESSION['user_id'];
-    $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
+
     if (isset($_POST['btn1'])) {
         if (isset($_POST['groupName']) && isset($_GET['course'])) {
             $groupName = $_POST['groupName'];
@@ -33,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <div id="id02" class="modal">
-<form id="createGroup" class="modal-content animate" action="./subject.php" method="POST">
+<form id="createGroup" class="modal-content animate" action="#" method="POST">
     <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
     <div class="containerPopup">
         <h2>Ny gruppe</h2>
