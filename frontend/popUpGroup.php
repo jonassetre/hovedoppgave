@@ -14,7 +14,7 @@
 <?php
 require_once 'src/App.php';
 $User_idUser = $_SESSION['user_id'];
-$subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
+$subjectsOfUserById = $app->getAllSubjectsOfUserById($_SESSION['user_id']);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!isset($_SESSION['user_id'])){

@@ -42,6 +42,7 @@ if ($method == 'GET') {
             <li>
                 <a href="subject.php?course=<?= $row['idSubject'] ?>">
                     <i aria-hidden="true"></i>
+
                     <?php
                     echo $row['subjectCode'] . ' ' . $row['subjectTitle'];
                     ?>
@@ -67,24 +68,26 @@ if ($method == 'GET') {
 
             <div class="jumbotron">
                 <div id="firstCont">
-                <div><h2>Groups</h2></div>
+                     <h2>Groups</h2>
 
                 <?php
                   if(isset($_GET['course'])) {
                       $groups = $app->getAllSubjectGroups($_GET['course']);
                           if(!empty($groups)){
                         foreach ($groups as $group){ ?>
+                    <ul>
                 <li>
-                    <a href="subject.php?course=<?= $row['idSubject'] ?>group=<?= $group['idGroup']  ?>">
+                    <a href="createQuestion.php?group=<?= $group['idGroup']  ?>">
                         <i aria-hidden="true"></i>
-                    </a>
 
                     <?php
                     echo $group['groupName'] ;
                     ?>
-                    <?php }} }else  ?></li>
-
-                    </div>
+                        <?php }} }?>
+                    </a>
+                </li>
+                    </ul>
+                </div>
 
 
 
