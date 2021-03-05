@@ -5,20 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create group</title>
     <link rel="stylesheet" href="../stylesheets/index.css" />
-    <script src="../frontend/index.js"></script>
     <script src="../frontend/subject.js"></script>
+    <script >
+        function createGroup(str) {
+            if (str=="") {
+                document.getElementById("btn1").innerHTML="";
+                return;
+            }
+            var xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("btn1").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","course.php?q="+str,true);
+            xmlhttp.send();
+        }
+    </script>
 </head>
 <body>
 
 
 <?php
 require_once 'src/App.php';
-
-$groupName = $_POST['groupName'];
-$subjectId = $_GET['course'];
-;
-$error ="";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!isset($_SESSION['user_id'])){
@@ -27,7 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST['btn1'])) {
-        if (!empty($groupName)) {
+        if (isset($_POST['groupName']) && isset($_GET['course'])) {
+            $groupName = $_POST['groupName'];
+            $subjectId = $_GET['course'];
             $app = new App($db);
             $app->createGroup($groupName,$subjectId);
         }
@@ -45,8 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="groupName" placeholder="Skriv gruppenavn" name="groupName" required>
         </label>
         <input type="hidden" id="Subject_idSubject" name="Subject_idSubject"
-               value="<?php echo  $subjectId?>">
-
+               value="<?php echo $_GET['course']?>">
         <button id="btn1" type="submit" name="btn1" >Lagre</button>
         <button id="btn2" type="button"  name="btn2" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Avbryt</button>
     </div>

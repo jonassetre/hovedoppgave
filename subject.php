@@ -11,6 +11,7 @@ if(!isset($_SESSION['user_id']) && ($_SESSION['Subject_idSubject'])){
 } ?>
 
 <?php
+
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == 'GET') {
     $User_idUser = $_SESSION['user_id'];
@@ -65,10 +66,25 @@ if ($method == 'GET') {
             </div>
 
             <div class="jumbotron">
-            <div id="firstCont">
+                <div id="firstCont">
+                Groups
+                <?php
+                  if(isset($_GET['course'])) {
+                      $groups = $app->getAllSubjectGroups($_GET['course']);
+                      if(!empty($groups)){
+                        foreach ($groups as $group){ ?>
+                <li>
+                    <a href="subject.php?course=<?= $row['idSubject'] ?>group=<?= $group['idGroup']  ?>">
+                        <i aria-hidden="true"></i>
+                    </a>
 
-                <h4>Groups</h4>
-
+                    <?php
+                    echo $group['groupName'] ;
+                    ?>
+                    <?php }}}  else  ?>
+                    <div>The subject has no groups</div>
+                </li>
+            </div>
 
             </div>
 
