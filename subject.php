@@ -5,7 +5,7 @@ require_once 'header.php';
 include ('./frontend/popupform.php');
 include ('./frontend/popUpGroup.php');
 
-if(!isset($_SESSION['user_id']) && ($_SESSION['Subject_idSubject'])){
+if(!isset($_SESSION['user_id'])){
     header('Location: login.php');
     exit;
 } ?>
@@ -67,11 +67,12 @@ if ($method == 'GET') {
 
             <div class="jumbotron">
                 <div id="firstCont">
-                Groups
+                <div><h2>Groups</h2></div>
+
                 <?php
                   if(isset($_GET['course'])) {
                       $groups = $app->getAllSubjectGroups($_GET['course']);
-                      if(!empty($groups)){
+                          if(!empty($groups)){
                         foreach ($groups as $group){ ?>
                 <li>
                     <a href="subject.php?course=<?= $row['idSubject'] ?>group=<?= $group['idGroup']  ?>">
@@ -81,12 +82,12 @@ if ($method == 'GET') {
                     <?php
                     echo $group['groupName'] ;
                     ?>
-                    <?php }}}  else  ?>
-                    <div>The subject has no groups</div>
-                </li>
-            </div>
+                    <?php }} }else  ?></li>
 
-            </div>
+                    </div>
+
+
+
 
                 <div id="secondCont">
                     <ul >
