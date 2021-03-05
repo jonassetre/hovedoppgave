@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Popup Login</title>
@@ -42,7 +41,6 @@
         $subjectCode = $_POST['subcode'];
         $subjectName = $_POST['subname'];
         if(!empty($subjectCode) && !empty($subjectName)){
-            $app = new App($db);
             $app->createSubject($subjectCode, $subjectName, $_SESSION['user_id']);
         }
     }
