@@ -3,15 +3,16 @@
 session_start();
 require_once 'header.php';
 include ('./frontend/popupform.php');
+include ('./frontend/popUpGroup.php');
 
-if(!isset($_SESSION['user_id'])){
+if(!isset($_SESSION['user_id']) && ($_SESSION['Subject_idSubject'])){
     header('Location: login.php');
     exit;
 } ?>
 
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
-if ($method == 'GET') {
+if ($method == 'POST') {
     $User_idUser = $_SESSION['user_id'];
     $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
 } ?>
@@ -54,20 +55,37 @@ if ($method == 'GET') {
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron" >
-                    <form>
-                        <label>
-                            <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
-                        </label>
-                        <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
-                    </form>
-                <?php include('frontend/popUpGroup.php'); ?>
+                <form>
+                    <label>
+                        <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
+                    </label>
+                    <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
+                </form>
+               <?php include('frontend/popUpGroup.php'); ?>
             </div>
 
             <div class="jumbotron">
             <div id="firstCont">
 
-                <h4>G</h4>
+                <h4>Groups</h4>
+                <?php
+                $stmt = new App($db);
+                if(isset($_POST['Subject_idSubject'])) {
+                    $groups = $stmt->getAllSubjectGroups($row['Subject_idSubject'] );
+                    if ($groups != null) {
+                foreach ($groups as $group){ ?>
+                <li>
+                    <a href="subject.php?course=<?= $group['Subject_idSubject'] ?> ?>">
+                        <i aria-hidden="true"></i>
+                    </a>
 
+                    <?php
+                    echo $group['groupName'];
+                    ?>
+                    <?php }
+                    }
+                }?>
+                </li>
             </div>
 
                 <div id="secondCont">

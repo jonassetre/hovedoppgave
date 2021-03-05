@@ -89,12 +89,13 @@ class App
         } catch (Exception $e) {
             print  $e->getMessage(). PHP_EOL;
         }
+        header("Location: {$_SERVER['HTTP_REFERER']}");
     }
 
     public function getAllSubjectGroups($idSubject){
         try {
-            $stmt = self::prepare("SELECT * FROM Group  WHERE Subject_idSubject = :idSubject");
-            $stmt->bindParam(":idSubject", $idSubject,  PDO::PARAM_INT);
+            $stmt = self::prepare("SELECT * FROM `Group`  WHERE `Subject_idSubject` =:Subject_idSubject");
+            $stmt->bindParam(":Subject_idSubject", $idSubject,  PDO::PARAM_INT);
             $stmt->execute();
             $i = 0;
             $groups= [];
@@ -102,6 +103,7 @@ class App
                 while ($group = $stmt->fetchObject("Group")) {
                     $groups[$i++] = $group;
                 }
+                return $groups;
             }
         } catch (Exception $e) {
             print  $e->getMessage(). PHP_EOL;
@@ -123,6 +125,31 @@ class App
         $count = (int)$stmt->fetchColumn();
         return $count;
     }
+
+    public function getGroupByGroupId($idGroup){
+        try {
+            $stmt = self::prepare("select * from `Group` where idGroup = :idGroup");
+            $stmt->bindParam(":idGroup", $idGroup, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
+
+    public function getSubjectBySubjectId($idSubject){
+        try {
+            $stmt = self::prepare("select * from `Subject` where idSubject = :idSubject");
+            $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
+
 }
 
 
