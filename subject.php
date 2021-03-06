@@ -3,20 +3,17 @@
 session_start();
 require_once 'header.php';
 include ('./frontend/popupform.php');
-include ('./frontend/popUpGroup.php');
+
 
 if(!isset($_SESSION['user_id'])){
     header('Location: login.php');
     exit;
 } ?>
-
 <?php
-
 $method = $_SERVER['REQUEST_METHOD'];
-if ($method == 'GET') {
-    $User_idUser = $_SESSION['user_id'];
-    $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
-} ?>
+$User_idUser = $_SESSION['user_id'];
+$subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
+?>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -37,8 +34,7 @@ if ($method == 'GET') {
         </div>
 
         <ul class="sidebar-navigation">
-            <?php
-            foreach ($subjectsOfUserById as $row){ ?>
+            <?php foreach ($subjectsOfUserById as $row) { ?>
             <li>
                 <a href="subject.php?course=<?= $row['idSubject'] ?>">
                     <i aria-hidden="true"></i>
@@ -88,9 +84,6 @@ if ($method == 'GET') {
                 </li>
                     </ul>
                 </div>
-
-
-
 
                 <div id="secondCont">
                     <ul >

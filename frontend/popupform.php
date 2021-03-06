@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Popup Login</title>
     <link rel="stylesheet" href="../stylesheets/index.css" />
-    <script src="../frontend/index.js"></script>
 </head>
 <body>
 <div id="id01" class="modal">

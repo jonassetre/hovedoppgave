@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create group</title>
     <link rel="stylesheet" href="../stylesheets/index.css" />
-    <script src="../frontend/subject.js"></script>
-
 </head>
 <body>
 
@@ -15,6 +13,7 @@
 require_once 'src/App.php';
 $User_idUser = $_SESSION['user_id'];
 $subjectsOfUserById = $app->getAllSubjectsOfUserById($_SESSION['user_id']);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!isset($_SESSION['user_id'])){
