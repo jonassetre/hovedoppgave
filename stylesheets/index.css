@@ -354,7 +354,7 @@ input[type=text].search {
     box-sizing: border-box;
 }
 input[type=text].inputQuestionName {
-    width: 230px;
+    padding: 8px 20px;
     box-sizing: border-box;
     border: 2px solid #4f90a9;
     border-radius: 5px;
@@ -370,7 +370,7 @@ input[type=text].inputQuestionName {
 }
 #dropdown{
     width: 150px;
-    padding: 10px 7px;
+    padding: 8px 7px;
     cursor: pointer;
     border-radius: 5px;
     text-align: left;
@@ -379,11 +379,13 @@ input[type=text].inputQuestionName {
     transition: all 0.4s ease 0s;
     color: #000000;
     margin-right: 30px;
-    font-size: 15px;
+    font-size: 14px;
     border: 2px solid #4f90a9;
 }
 input[type=text].inputQuestionPoeng {
-    width: 40px;
+    width: 44px;
+    height: 34px;
+    padding: 8px 8px;
     box-sizing: border-box;
     border: 2px solid #4f90a9;
     border-radius: 5px;
@@ -403,4 +405,167 @@ input[type=text].inputQuestionPoeng {
     color: white;
     text-align: center;
     font-size: 10px;
+}
+
+b {
+    font-weight: bold;
+}
+
+i {
+    font-style: italic;
+}
+
+ul,
+ol {
+    margin-left: 40px;
+}
+
+#editor {
+    margin: auto 9px 20px 9px;
+    border: 2px solid #4f90a9;
+    background: #fafafa;
+    padding: 0 4px 0 4px;
+}
+
+#toolbar {
+    margin-right: 5px;
+    border-bottom: 1px solid #464646;;
+    overflow: hidden;
+    padding: 5px 0 3px 4px;
+}
+
+#page {
+    margin-top: 10px;
+    min-height: 70px;
+    outline: none;
+    margin-left: 10px;
+}
+
+.icon {
+    float: left;
+    height: 25px;
+    width: 40px;
+    margin-right: 10px;
+    background: #fafafa;
+    font-size: 1.2rem;
+    color: #464646;
+    text-align: center;
+    cursor: pointer;
+}
+
+.icon:hover {
+    border-color: #3e7086;
+    color: #3e7086;
+}
+#btnCorrect , #btnFalse{
+    display: inline-block;
+}
+#btnCorrect{
+    background-color: #4e9150;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+}
+
+#btnFalse{
+    background-color: #dd3c31;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+
+#btnSaveQuestion , #btnCancel  {
+    display: inline-block;
+}
+#btnSaveQuestion {
+    background-color: #4e9150;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 343px;
+    margin-right: 24px;
+    cursor: pointer;
+    width: 20%;
+    font-size: 16px;
+}
+#btnCancel {
+    background-color: #dd3c31;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 30px;
+    margin-right: 50px;
+    cursor: pointer;
+    width: 20%;
+    font-size: 16px;
+}
+.correctAnswer{
+    margin-top: 10px;
+    color: #4e9150;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    font-size: 14px;
+}
+.wrongAnswer{
+    margin-top: 10px;
+    color: #dd3c31;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    font-size: 14px;
+}
+input[type=text].inputQuestion, input[type=text].inputComment, input[type=text].inputGenerellComment{
+    width: 90%;
+    box-sizing: border-box;
+    border: 1px solid #AFACA1;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 0;
+    background-color: white;
+    margin-right: 10px;
+    height: 18px;
+}
+h4{
+    margin: 0 0 5px 20px;
+}
+.generellComment{
+    margin-top: 10px;
+    color: #918b86;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    font-size: 14px;
+}
+table {
+    position: relative;
+    z-index: -1;
+    margin-left: 30px;
+    width: 95%;
+    border: 1px solid #AFACA1;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #ccd;
+}
+
+tr:nth-child(even) {
+    background-color: #ecf6fc;
+}
+
+tr:nth-child(odd) {
+    background-color: #d8e1ea;
 }

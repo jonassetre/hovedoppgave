@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <div id="id02" class="modal">
-<form id="createGroup" class="modal-content animate" action="#" method="POST">
+<form id="createGroup" class="modal-content animate" action="" method="POST">
     <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
     <div class="containerPopup">
         <h2>Ny gruppe</h2>

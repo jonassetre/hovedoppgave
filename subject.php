@@ -24,6 +24,7 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
     <script src="frontend/index.js"></script>
     <script src="frontend/subject.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 
 <body>
@@ -34,7 +35,9 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
         </div>
 
         <ul class="sidebar-navigation">
-            <?php foreach ($subjectsOfUserById as $row) { ?>
+            <?php foreach ($subjectsOfUserById
+
+            as $row) { ?>
             <li>
                 <a href="subject.php?course=<?= $row['idSubject'] ?>">
                     <i aria-hidden="true"></i>
@@ -52,51 +55,54 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
     <div class="content-container">
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
-            <div class="jumbotron" >
+            <div class="jumbotron">
                 <form>
                     <label>
                         <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
                     </label>
                     <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
                 </form>
-               <?php include('frontend/popUpGroup.php'); ?>
+                <?php include('frontend/popUpGroup.php'); ?>
             </div>
 
             <div class="jumbotron">
                 <div id="firstCont">
-                     <h2>Groups</h2>
-
-                <?php
-                  if(isset($_GET['course'])) {
-                      $groups = $app->getAllSubjectGroups($_GET['course']);
-                          if(!empty($groups)){
-                        foreach ($groups as $group){ ?>
-                    <ul>
-                <li>
-                    <a href="createQuestion.php?group=<?= $group['idGroup']  ?>">
-                        <i aria-hidden="true"></i>
+                    <h2>Grupper</h2>
 
                     <?php
-                    echo $group['groupName'] ;
-                    ?>
-                        <?php }} }?>
-                    </a>
-                </li>
-                    </ul>
+                    if(isset($_GET['course'])) {
+                    $groups = $app->getAllSubjectGroups($_GET['course']);
+                    if(!empty($groups)){ ?>
+
+                    <table id="tblData">
+                        <tr>
+                            <th><input type="checkbox" id="chkParent" onclick="checkboxGruppe();"/></th>
+                            <th>Navn</th>
+                        </tr>
+
+                        <tr>
+                            <?php foreach ($groups as $group){ ?>
+                            <td>  <input type="checkbox"/>  </td>
+                            <td> <?php echo $group['groupName']; ?> </td>
+                        </tr>
+                        <?php }}} ?>
+                    </table>
                 </div>
 
                 <div id="secondCont">
-                    <ul >
+                    <ul>
                         <li><a href="#">Tester</a></li>
                         <li><a href="#">Importere</a></li>
                         <li><a href="#">Eksportere</a></li>
                         <li><a href="#">Personer</a></li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 <?php require_once 'footer.php'; ?>
+
 </body>
 </html>

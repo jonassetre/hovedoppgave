@@ -10,3 +10,10 @@ window.onclick = function(event) {
     }
 }
 }
+function CloneForm(formName) {
+    let formCount = document.forms.length;
+    let oForm = document.forms[formName];
+    let clone = oForm.cloneNode(true);
+    clone.name += "_" + formCount;
+    document.body.appendChild(clone);
+}
