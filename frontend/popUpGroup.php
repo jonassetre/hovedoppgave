@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create group</title>
     <link rel="stylesheet" href="../stylesheets/index.css" />
-</head>
+   </head>
 <body>
 
 
@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subjectId = $_GET['course'];
             $app = new App($db);
             $app->createGroup($groupName,$subjectId);
+            echo "<meta http-equiv='refresh' content='0;url=subject.php?course=$subjectId'>";
         }
     }
 }
@@ -46,6 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button id="btn1" type="submit" name="btn1" >Lagre</button>
         <button id="btn2" type="button"  name="btn2" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Avbryt</button>
     </div>
+
+
 </form>
 
 </div>

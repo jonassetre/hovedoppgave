@@ -2,17 +2,22 @@
 <?php
 session_start();
 require_once 'header.php';
-include ('./frontend/popupform.php');
 
-
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 } ?>
 <?php
+require_once 'src/App.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $User_idUser = $_SESSION['user_id'];
 $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
+?>
+
+<?php
+$method = $_SERVER['REQUEST_METHOD'];
+$idSubject = $_GET['course'];
+$subjectsById = $app->getSubjectBySubjectId($idSubject);
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +30,12 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
     <script src="frontend/subject.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-</head>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <body>
 <div class="container">
     <div class="sidebar-container">
-        <div class="sidebar-logo" onclick="popUpNewSubject()">
+        <div class="sidebar-logo" onclick="window.location.href='createSubject.php';">
             Emner
         </div>
 
@@ -67,25 +72,41 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
 
             <div class="jumbotron">
                 <div id="firstCont">
-                    <h2>Grupper</h2>
+                    <div class="example-1">
+                        <a href="editSubject.php?course=<?= $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?>
+                        </a>
+                    </div>
 
                     <?php
-                    if(isset($_GET['course'])) {
+                    if (isset($_GET['course'])) {
                     $groups = $app->getAllSubjectGroups($_GET['course']);
-                    if(!empty($groups)){ ?>
+                    if (!empty($groups)){ ?>
 
                     <table id="tblData">
                         <tr>
-                            <th><input type="checkbox" id="chkParent" onclick="checkboxGruppe();"/></th>
-                            <th>Navn</th>
+                            <th style="width: 5%;"><input type="checkbox" id="chkParent" onclick="checkboxGruppe();"/>
+                            </th>
+                            <th style="width: 55%;">Navn</th>
+                            <th style="width: 25%;">Spørsmål</th>
+                            <th style="width: 15%;"></th>
                         </tr>
 
                         <tr>
-                            <?php foreach ($groups as $group){ ?>
-                            <td>  <input type="checkbox"/>  </td>
+                            <?php foreach ($groups
+
+                            as $group){ ?>
+                            <td><input type="checkbox"/></td>
                             <td> <?php echo $group['groupName']; ?> </td>
+                            <td>  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
+                            </td>
+                            <td>
+                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
+                            </td>
                         </tr>
-                        <?php }}} ?>
+                        <?php }
+                        }
+                        } ?>
                     </table>
                 </div>
 
@@ -94,7 +115,7 @@ $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
                         <li><a href="#">Tester</a></li>
                         <li><a href="#">Importere</a></li>
                         <li><a href="#">Eksportere</a></li>
-                        <li><a href="#">Personer</a></li>
+                        <li><a href="editSubject.php?course=<?= $subjectsById['idSubject'] ?>">Personer</a></li>
                     </ul>
                 </div>
 
