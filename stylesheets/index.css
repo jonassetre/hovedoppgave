@@ -201,8 +201,9 @@ button:hover {
     cursor: pointer;
 }
 
-#button1, #button2 {
+#button1 {
     display: inline-block;
+    float: right;
 }
 
 h2 {
@@ -581,7 +582,7 @@ h4 {
 table {
     margin-left: 30px;
     width: 95%;
-    border: 1px solid #AFACA1;
+    border: 1px solid #afaca1;
 }
 
 td,
@@ -633,7 +634,7 @@ tr:nth-child(odd) {
 
 .editGroup a {
     padding: 0.25rem 1.25rem;
-    background: url('../pencil.png') right 0 center / 16px no-repeat;
+    background: url('../edit.png') right 0 center / 16px no-repeat;
     float: left;
     width: 10px;
     height: 8px;
@@ -670,4 +671,10 @@ td a.edit {
 td a.delete {
     color: #dd3c31;
     margin-left: 12px;
+}
+.modal-content-subject {
+    padding: 20px;
+    margin: 2% auto 2% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 2px solid rgb(86, 149, 173);
+    width: 350px;
 }

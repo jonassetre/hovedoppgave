@@ -34,13 +34,14 @@ if (isset($_POST['button1'])){
         <a class="backToGroup" onclick="window.location.href='subject.php';"> Gå til emner</a>
     </div>
     <h2>Nytt emne</h2>
-    <form id="createSubject" class="modal-content animate" action="" method="post">
-        <div class="containerPopup">
+    <form id="createSubject" class="modal-content-subject" action="" method="post">
+        <div class="containerSubject">
 
             <label for="subcode"><b>Emnekode</b></label>
             <label>
                 <input type="text" placeholder="Skriv emnekode" name="subcode" required>
             </label>
+            <br>
 
             <label for="subname"><b>Emnenavn</b></label>
             <label>
@@ -48,8 +49,8 @@ if (isset($_POST['button1'])){
             </label>
 
             <button id="button1" type="submit" name="button1" >Lagre</button>
-            <button id="button2" type="button" name="button2" onclick="window.location.href='createSubject.php';" class="cancelbtn">Avbryt</button>
-        </div>
+
+               </div>
     </form>
 </div>
 <?php require_once 'footer.php'; ?>

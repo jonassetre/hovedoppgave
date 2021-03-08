@@ -23,7 +23,28 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
 <div class="container">
+    <div class="questionTop">
+        <a class="backToGroup" onclick="window.location.href='subject.php';"> Gå til emner</a>
+    </div>
+    <h2>Oppdatere emne</h2>
+    <form id="createSubject" class="modal-content-subject" action="" method="post">
+        <div class="containerSubject">
 
+            <label for="subcode"><b>Emnekode</b></label>
+            <label>
+                <input type="text" placeholder="Skriv emnekode" name="subcode" required>
+            </label>
+            <br>
+
+            <label for="subname"><b>Emnenavn</b></label>
+            <label>
+                <input type="text" placeholder="Skriv emnenavn" name="subname" required>
+            </label>
+
+            <button id="button1" type="submit" name="button1" >Lagre</button>
+
+        </div>
+    </form>
 </div>
 <?php require_once 'footer.php'; ?>
 
