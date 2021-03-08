@@ -75,6 +75,7 @@ require 'auth_pdo.php';
                     <input class="form-control" type="password" name="password" required>
                     <hr class="mb-3">
                     <input class="btn btn-primary" type="submit" name="create" value="Registrer">
+                    <input class="btn btn-primary" onclick="location.href='login.php'" type="button" value="Tilbake">
                 </div>
             </div>
         </div>
