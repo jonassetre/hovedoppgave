@@ -149,6 +149,19 @@ class App
         }
     }
 
+    public function updateSubject(int $idSubject, string $subjectCode, string $subjectTitle) : bool {
+        $stmt = self::prepare("UPDATE Subject SET subjectCode = :subjectCode, subjectTitle = :subjectTitle WHERE idSubject = :idSubject;");
+        $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
+        $stmt->bindParam(":subjectCode", $subjectCode, PDO::PARAM_STR);
+        $stmt->bindParam(":subjectTitle", $subjectTitle, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    public function deleteSubject(int $idSubject) : bool {
+        $stmt = self::prepare("DELETE FROM Subject WHERE idSubject = :idSubject");
+        $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
 
 
