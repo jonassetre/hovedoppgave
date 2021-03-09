@@ -150,11 +150,11 @@ class App
         }
     }
 
-    public function updateSubject(int $idSubject, string $subjectCode, string $subjectTitle) : bool {
-        $stmt = self::prepare("UPDATE Subject SET subjectCode = :subjectCode, subjectTitle = :subjectTitle WHERE idSubject = :idSubject;");
-        $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
+    public function updateSubject(int $idSubject, string $subjectCode, string $subjectTitle) {
+        $stmt = self::prepare("UPDATE `Subject` SET subjectCode = :subjectCode, subjectTitle = :subjectTitle WHERE idSubject = :idSubject");
         $stmt->bindParam(":subjectCode", $subjectCode, PDO::PARAM_STR);
         $stmt->bindParam(":subjectTitle", $subjectTitle, PDO::PARAM_STR);
+        $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
         return $stmt->execute();
     }
 

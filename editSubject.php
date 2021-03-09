@@ -3,11 +3,30 @@
 session_start();
 require_once 'header.php';
 
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
-} ?>
+}
+require_once 'src/App.php';
+$method = $_SERVER['REQUEST_METHOD'];
+if (isset($_GET['course'])) {
+    $idSubject = $_GET['course'];
+    $data = $app->getSubjectBySubjectId($idSubject);
+}
+?>
+
+<?php
+require_once 'src/App.php';
+$method = $_SERVER['REQUEST_METHOD'];
+if(isset($_POST['update'])){
+    $subjectCode = $_POST['subjectCode'];
+    $subjectTitle = $_POST['subjectTitle'];
+    if(!empty($subjectCode) && !empty($subjectTitle)){
+        $app->updateSubject($idSubject, $subjectCode,$subjectTitle);
+    }
+    echo "<meta http-equiv='refresh' content='0;url=editSubject.php?course=$idSubject'>";
+
+}?>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -15,10 +34,7 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Header</title>
-    <script src="frontend/index.js"></script>
-    <script src="frontend/subject.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 
 <body>
@@ -27,24 +43,24 @@ if (!isset($_SESSION['user_id'])) {
         <a class="backToGroup" onclick="window.location.href='subject.php';"> Gå til emner</a>
     </div>
     <h2>Oppdatere emne</h2>
-    <form id="createSubject" class="modal-content-subject" action="" method="post">
+    <form id="createSubject" class="modal-content-subject" action= "" method="post">
         <div class="containerSubject">
 
-            <label for="subcode"><b>Emnekode</b></label>
+            <label for="subjectCode"><b>Emnekode</b></label>
             <label>
-                <input type="text" placeholder="Skriv emnekode" name="subcode" required>
+                <input type="text" placeholder="Skriv emnekode" value="<?php echo $data['subjectCode'] ?>" name="subjectCode" required>
             </label>
             <br>
 
-            <label for="subname"><b>Emnenavn</b></label>
+            <label for="subjectTitle"><b>Emnenavn</b></label>
             <label>
-                <input type="text" placeholder="Skriv emnenavn" name="subname" required>
+                <input type="text" placeholder="Skriv emnenavn" value="<?php echo $data['subjectTitle'] ?>" name="subjectTitle" required>
             </label>
-
-            <button id="button1" type="submit" name="button1" >Lagre</button>
+            <button id="update" type="submit" value="update" name="update" >Lagre</button>
 
         </div>
     </form>
+
 </div>
 <?php require_once 'footer.php'; ?>
 

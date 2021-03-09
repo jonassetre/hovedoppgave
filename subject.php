@@ -81,7 +81,7 @@ if (empty($idSubject)) {
                 <div id="firstCont">
                     <?php if (isset($idSubject)) { ?>
                         <div class="example-1">
-                            <a href="editSubject.php?course=<?php $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?></strong>
+                            <a href="editSubject.php?course=<?= $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?></strong>
                             </a>
                         </div>
                     <?php } ?>
@@ -118,8 +118,8 @@ if (empty($idSubject)) {
 
                         <?php
                         $method = $_SERVER['REQUEST_METHOD'];
-                        $idSubject = 526;
-                        $questions = $app->getAllQuestionByGroupId($idSubject); ?>
+                        $idGroup = 526;
+                        $questions = $app->getAllQuestionByGroupId($idGroup); ?>
 
                         <tr id="row1" style="DISPLAY: none">
                             <td colSpan=5>
@@ -127,7 +127,7 @@ if (empty($idSubject)) {
                                     <?php foreach ($questions
                                                    as $question) { ?>
                                         <tr>
-
+                                            <td style="width: 5%;"><input type="checkbox"/></td>
                                             <td style="width: 60%;"><?php echo $question['questContent']; ?></td>
                                             <td style="width: 10%;"><?php echo $question['Score'] . ' poeng'; ?></td>
                                             <td style="width: 11%;"><?php echo $question['diff_degree']; ?></td>
@@ -151,7 +151,7 @@ if (empty($idSubject)) {
                         } else { ?>
                             <div class="example-1">
                                 <h1><strong><?php echo "Vennligst velg et emne."; ?></strong></h1>
-                                </a>
+
                             </div>
                             <?php
                         } ?>
