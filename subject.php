@@ -2,27 +2,30 @@
 <?php
 session_start();
 require_once 'header.php';
-$hideDiv = 'style="display:none;';
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
-} ?>
-<?php
+}
+
 require_once 'src/App.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $User_idUser = $_SESSION['user_id'];
 $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
-//?>
-<!---->
-<?php
+
+
 $method = $_SERVER['REQUEST_METHOD'];
 if (isset($_GET['course'])) {
     $idSubject = $_GET['course'];
     $subjectsById = $app->getSubjectBySubjectId($idSubject);
 }
 
-?>
 
+ if(empty($idSubject)){
+    $hideDiv= 'style="display:none;';
+    } else{
+    $hideDiv= "";
+}?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -65,16 +68,16 @@ if (isset($_GET['course'])) {
     <div class="content-container">
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
-            <div class="jumbotron"<?php echo $hideDiv;?>>
+            <div class="jumbotron" <?php echo $hideDiv;?>>
                 <form>
                     <label>
                         <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
                     </label>
                     <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
                 </form>
-                <?php include('frontend/popUpGroup.php'); ?>
-            </div>
 
+            </div>
+            <?php include('frontend/popUpGroup.php'); ?>
             <div class="jumbotron">
                 <div id="firstCont">
                     <?php if(isset($idSubject)){ ?>
@@ -86,7 +89,7 @@ if (isset($_GET['course'])) {
 
 
                     <?php
-                    if (isset($idSubject)) {
+                    if (!empty($idSubject)) {
                     $groups = $app->getAllSubjectGroups($idSubject);
 
                     if(!empty($groups)){ ?>
@@ -94,9 +97,7 @@ if (isset($_GET['course'])) {
                     <table id="tblData">
 
                         <tr>
-                            <?php foreach ($groups
-
-                            as $group){ ?>
+                            <?php foreach ($groups as $group){ ?>
                             <td style="width: 5%;"><input type="checkbox"/></td>
                             <td style="color: #5e97b0; width: 60%; " onclick="a('row1')">
                                <?php echo $group['groupName']; ?>
@@ -127,11 +128,10 @@ if (isset($_GET['course'])) {
 
                         <?php }
                         }
-                        } ?>
+                        } else { echo "Vennligst velg et emne"; }?>
                     </table>
-  <?php if(empty($idSubject)){
-
-  echo "Vennligst velg et emne";}?>
+                    <div>
+                    </div>
                 </div>
 
                 <div id="secondCont">
