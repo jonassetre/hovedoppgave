@@ -2,7 +2,7 @@
 <?php
 session_start();
 require_once 'header.php';
-
+$hideDiv = 'style="display:none;';
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -12,12 +12,15 @@ require_once 'src/App.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $User_idUser = $_SESSION['user_id'];
 $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
-?>
-
+//?>
+<!---->
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
-$idSubject = $_GET['course'];
-$subjectsById = $app->getSubjectBySubjectId($idSubject);
+if (isset($_GET['course'])) {
+    $idSubject = $_GET['course'];
+    $subjectsById = $app->getSubjectBySubjectId($idSubject);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +63,7 @@ $subjectsById = $app->getSubjectBySubjectId($idSubject);
     <div class="content-container">
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
-            <div class="jumbotron">
+            <div class="jumbotron"<?php echo $hideDiv;?>>
                 <form>
                     <label>
                         <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
@@ -72,15 +75,19 @@ $subjectsById = $app->getSubjectBySubjectId($idSubject);
 
             <div class="jumbotron">
                 <div id="firstCont">
-                    <div class="example-1">
-                        <a href="editSubject.php?course=<?= $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?>
-                        </a>
-                    </div>
+                    <?php if(isset($idSubject)){ ?>
+                        <div class="example-1">
+                            <a href="editSubject.php?course=<?php $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?>
+                            </a>
+                        </div>
+                    <?php } ?>
+
 
                     <?php
-                    if (isset($_GET['course'])) {
-                    $groups = $app->getAllSubjectGroups($_GET['course']);
-                    if (!empty($groups)){ ?>
+                    if (isset($idSubject)) {
+                    $groups = $app->getAllSubjectGroups($idSubject);
+
+                    if(!empty($groups)){ ?>
 
                     <table id="tblData">
                         <tr>
@@ -100,14 +107,16 @@ $subjectsById = $app->getSubjectBySubjectId($idSubject);
                             <td>  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
                             </td>
                             <td>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                <a class="edit" name="edit" title="Edit" data-toggle="tooltip" href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons">&#xE254;</i></a>
                                 <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
                             </td>
                         </tr>
-                        <?php }
-                        }
-                        } ?>
+
+                        <?php }}}?>
                     </table>
+  <?php if(empty($idSubject)){
+
+  echo "Vennligst velg et emne";}?>
                 </div>
 
                 <div id="secondCont">
