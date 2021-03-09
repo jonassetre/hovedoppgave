@@ -21,15 +21,14 @@ if (isset($_GET['course'])) {
 }
 
 
- if(empty($idSubject)){
-    $hideDiv= 'style="display:none;';
-    } else{
-    $hideDiv= "";
-}?>
+if (empty($idSubject)) {
+    $hideDiv = 'style="display:none;';
+} else {
+    $hideDiv = "";
+} ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Header</title>
     <script src="frontend/index.js"></script>
@@ -68,7 +67,7 @@ if (isset($_GET['course'])) {
     <div class="content-container">
         <div class="container-fluid">
             <!-- Main component for a primary marketing message or call to action -->
-            <div class="jumbotron" <?php echo $hideDiv;?>>
+            <div class="jumbotron" <?php echo $hideDiv; ?>>
                 <form>
                     <label>
                         <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
@@ -80,7 +79,7 @@ if (isset($_GET['course'])) {
             <?php include('frontend/popUpGroup.php'); ?>
             <div class="jumbotron">
                 <div id="firstCont">
-                    <?php if(isset($idSubject)){ ?>
+                    <?php if (isset($idSubject)) { ?>
                         <div class="example-1">
                             <a href="editSubject.php?course=<?php $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?></strong>
                             </a>
@@ -92,49 +91,70 @@ if (isset($_GET['course'])) {
                     if (!empty($idSubject)) {
                     $groups = $app->getAllSubjectGroups($idSubject);
 
-                    if(!empty($groups)){ ?>
+                    if (!empty($groups)){ ?>
 
                     <table id="tblData">
 
                         <tr>
-                            <?php foreach ($groups as $group){ ?>
+                            <?php foreach ($groups
+
+                            as $group){ ?>
                             <td style="width: 5%;"><input type="checkbox"/></td>
                             <td style="color: #5e97b0; width: 60%; " onclick="a('row1')">
-                               <?php echo $group['groupName']; ?>
+                                <?php echo $group['groupName']; ?>
                             </td>
-                            <td style="width: 20%;">  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
+                            <td style="width: 20%;"><a class="btnNewQuestion"
+                                                       onclick="window.location.href='createQuestion.php';"> + Ny
+                                    spørsmål</a>
                             </td>
                             <td style="width: 15%;">
-                                <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip" href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
-                                <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
+                                <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip"
+                                   href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons"
+                                                                                              onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i
+                                            class="material-icons" onclick="">&#xE872;</i></a>
                             </td>
                         </tr>
 
-                        <tr id="row1" style="DISPLAY: none">
-                            <td colSpan=4><table class="small_text">
+                        <?php
+                        $method = $_SERVER['REQUEST_METHOD'];
+                        $idSubject = 526;
+                        $questions = $app->getAllQuestionByGroupId($idSubject); ?>
 
-                                    <tr>
-                                        <td style="width: 5%;"><input type="checkbox"/></td>
-                                        <td style="width: 60%;">Innehold</td>
-                                        <td style="width: 10%;">1 poeng</td>
-                                        <td style="width: 11%;">Middels</td>
-                                        <td style="width: 14%;">
-                                            <a class="editQ" title="Redigere  denne spørsmål" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
-                                            <a class="deleteQ" title="Slette denne spørsmål" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
-                                        </td>
-                                    </tr>
-                                </table></td>
+                        <tr id="row1" style="DISPLAY: none">
+                            <td colSpan=5>
+                                <table class="small_text">
+                                    <?php foreach ($questions
+                                                   as $question) { ?>
+                                        <tr>
+
+                                            <td style="width: 60%;"><?php echo $question['questContent']; ?></td>
+                                            <td style="width: 10%;"><?php echo $question['Score'] . ' poeng'; ?></td>
+                                            <td style="width: 11%;"><?php echo $question['diff_degree']; ?></td>
+                                            <td style="width: 14%;">
+                                                <a class="editQ" title="Redigere  denne spørsmål" data-toggle="tooltip"><i
+                                                            class="material-icons"
+                                                            onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                                <a class="deleteQ" title="Slette denne spørsmål"
+                                                   data-toggle="tooltip"><i class="material-icons"
+                                                                            onclick="">&#xE872;</i></a>
+                                            </td>
+
+                                        </tr>                                <?php
+                                    } ?>
+                                </table>
+                            </td>
                         </tr>
 
                         <?php }
                         }
-                        } else {?>
-                        <div class="example-1">
-                            <h1><strong><?php echo "Vennligst velg et emne."; ?></strong></h1>
-                        </a>
-                </div>
-                        <?php
-} ?>
+                        } else { ?>
+                            <div class="example-1">
+                                <h1><strong><?php echo "Vennligst velg et emne."; ?></strong></h1>
+                                </a>
+                            </div>
+                            <?php
+                        } ?>
                     </table>
                     <div>
                     </div>
@@ -155,8 +175,8 @@ if (isset($_GET['course'])) {
 </div>
 <?php require_once 'footer.php'; ?>
 <script>
-    $(function(){
-        $('tr:visible').click(function(){
+    $(function () {
+        $('tr:visible').click(function () {
             $(this).next().toggle()
         })
     })
