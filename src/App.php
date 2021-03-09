@@ -36,6 +36,71 @@ class App
         return 0;
     }
 
+    public function getUserIdFromSubjectCode($subjectCode){
+        $stmt = self::prepare('SELECT idSubject FROM Subject WHERE subjectCode=:subjectCode');
+        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+
+    public function getAllQuestionByGroupId($idGroup){
+
+        $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
+        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    #region Answer
+    #endregion
+
+    #region Comment
+    #endregion
+
+    #region Group
+    public function createGroup($groupName, $id_subject){
+        try {
+            $stmt = self::prepare("INSERT INTO `Group`(`groupName`, `Subject_idSubject`)" .
+                "VALUES (:groupName, :id_subject)");
+            $stmt->bindParam(":groupName", $groupName, PDO::PARAM_STR);
+            $stmt->bindParam(":id_subject", $id_subject, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            print  $e->getMessage(). PHP_EOL;
+        }
+    }
+
+    public function getAllSubjectGroups($idSubject){
+
+        $stmt = self::prepare("SELECT * FROM `Group`  WHERE `Subject_idSubject` =:Subject_idSubject");
+        $stmt->bindParam(":Subject_idSubject", $idSubject, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function getGroupByGroupId($idGroup){
+        try {
+            $stmt = self::prepare("select * from `Group` where idGroup = :idGroup");
+            $stmt->bindParam(":idGroup", $idGroup, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
+    #endregion
+
+    #region Question
+    #endregion
+
+    #region Score
+    #endregion
+
+    #region Subject
     public function subjectExists($subjectCode){
         //Sjekker om et emne med valgt emnekode allerede eksisterer
         $stmt = self::prepare('SELECT * FROM Subject WHERE subjectCode=:subjectCode');
@@ -48,12 +113,6 @@ class App
             return false;
     }
 
-    public function getUserIdFromSubjectCode($subjectCode){
-        $stmt = self::prepare('SELECT idSubject FROM Subject WHERE subjectCode=:subjectCode');
-        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchColumn();
-    }
     public function createSubject($subjectCode, $subjectTitle, $userId){
         try {
             //Viser alert og redirecter om emnekoden allerede er i bruk
@@ -76,64 +135,6 @@ class App
             $stmt->execute();
         } catch  (Exception $e) {
             print $e->getMessage(). PHP_EOL;
-        }
-    }
-
-    public function createGroup($groupName, $id_subject){
-        try {
-            $stmt = self::prepare("INSERT INTO `Group`(`groupName`, `Subject_idSubject`)" .
-                "VALUES (:groupName, :id_subject)");
-            $stmt->bindParam(":groupName", $groupName, PDO::PARAM_STR);
-            $stmt->bindParam(":id_subject", $id_subject, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            print  $e->getMessage(). PHP_EOL;
-        }
-    }
-
-    public function getAllSubjectGroups($idSubject){
-
-            $stmt = self::prepare("SELECT * FROM `Group`  WHERE `Subject_idSubject` =:Subject_idSubject");
-            $stmt->bindParam(":Subject_idSubject", $idSubject, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-
-    public function getAllQuestionByGroupId($idGroup){
-
-        $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
-        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-
-    public function getAllSubjectsOfUserById(int $User_idUser)  {
-        $stmt = self::prepare(" SELECT * FROM Subject JOIN User_has_Subject 
-             On Subject.idSubject =User_has_Subject.Subject_idSubject WHERE User_has_Subject.User_idUser = :User_idUser");
-        $stmt->bindParam(":User_idUser", $User_idUser);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function countSubjectsOfUser(int $User_idUser)  {
-        $stmt = self::prepare("SELECT COUNT(*) AS num_rows FROM User_has_Subject WHERE `User_idUser` = :User_idUser");
-        $stmt->bindParam(":User_idUser", $User_idUser);
-        $stmt -> execute();
-        $count = (int)$stmt->fetchColumn();
-        return $count;
-    }
-
-    public function getGroupByGroupId($idGroup){
-        try {
-            $stmt = self::prepare("select * from `Group` where idGroup = :idGroup");
-            $stmt->bindParam(":idGroup", $idGroup, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetch();
-
-        } catch (InvalidArgumentException $ex) {
-            print $ex->getMessage() . PHP_EOL;
         }
     }
 
@@ -162,6 +163,45 @@ class App
         $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
         return $stmt->execute();
     }
+    #endregion
+
+    #region Test
+    #endregion
+
+    #region User
+    #endregion
+
+    #region User_has_Subject
+    public function countSubjectsOfUser(int $User_idUser)  {
+        $stmt = self::prepare("SELECT COUNT(*) AS num_rows FROM User_has_Subject WHERE `User_idUser` = :User_idUser");
+        $stmt->bindParam(":User_idUser", $User_idUser);
+        $stmt -> execute();
+        $count = (int)$stmt->fetchColumn();
+        return $count;
+    }
+
+    public function getAllSubjectsOfUserById(int $User_idUser)  {
+        $stmt = self::prepare(" SELECT * FROM Subject JOIN User_has_Subject 
+             On Subject.idSubject =User_has_Subject.Subject_idSubject WHERE User_has_Subject.User_idUser = :User_idUser");
+        $stmt->bindParam(":User_idUser", $User_idUser);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    #endregion
+
+    #region UserRole
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
