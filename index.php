@@ -33,8 +33,7 @@ if(!isset($_SESSION['user_id'])){
         <a class="example_b" onclick="window.location.href='subject.php';"> Gå til emner</a>
         <?php
     } else { ?>
-        <a class="example_b" onclick="popUpNewSubject()"> + Nytt emne</a>
-        <?php include('./frontend/popupform.php'); ?>
+        <a class="example_b" onclick="window.location.href='createSubject.php';"> + Nytt emne</a>
     <?php } ?>
 
 

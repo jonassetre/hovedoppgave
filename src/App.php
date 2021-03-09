@@ -100,6 +100,15 @@ class App
 
     }
 
+    public function getAllQuestionByGroupId($idGroup){
+
+        $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
+        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
     public function getAllSubjectsOfUserById(int $User_idUser)  {
         $stmt = self::prepare(" SELECT * FROM Subject JOIN User_has_Subject 
              On Subject.idSubject =User_has_Subject.Subject_idSubject WHERE User_has_Subject.User_idUser = :User_idUser");

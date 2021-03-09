@@ -33,7 +33,9 @@ if (isset($_GET['course'])) {
     <script src="frontend/subject.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <body>
 <div class="container">
@@ -90,29 +92,42 @@ if (isset($_GET['course'])) {
                     if(!empty($groups)){ ?>
 
                     <table id="tblData">
-                        <tr>
-                            <th style="width: 5%;"><input type="checkbox" id="chkParent" onclick="checkboxGruppe();"/>
-                            </th>
-                            <th style="width: 55%;">Navn</th>
-                            <th style="width: 25%;">Spørsmål</th>
-                            <th style="width: 15%;"></th>
-                        </tr>
 
                         <tr>
                             <?php foreach ($groups
 
                             as $group){ ?>
-                            <td><input type="checkbox"/></td>
-                            <td> <?php echo $group['groupName']; ?> </td>
-                            <td>  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
+                            <td style="width: 5%;"><input type="checkbox"/></td>
+                            <td style="color: #5e97b0; width: 60%; " onclick="a('row1')">
+                               <?php echo $group['groupName']; ?>
                             </td>
-                            <td>
-                                <a class="edit" name="edit" title="Edit" data-toggle="tooltip" href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
+                            <td style="width: 20%;">  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
+                            </td>
+                            <td style="width: 15%;">
+                                <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
                             </td>
                         </tr>
 
-                        <?php }}}?>
+                        <tr id="row1" style="DISPLAY: none">
+                            <td colSpan=4><table class="small_text">
+
+                                    <tr>
+                                        <td style="width: 5%;"><input type="checkbox"/></td>
+                                        <td style="width: 60%;">Innehold</td>
+                                        <td style="width: 10%;">1 poeng</td>
+                                        <td style="width: 11%;">Middels</td>
+                                        <td style="width: 14%;">
+                                            <a class="editQ" title="Redigere  denne spørsmål" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                            <a class="deleteQ" title="Slette denne spørsmål" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                </table></td>
+                        </tr>
+
+                        <?php }
+                        }
+                        } ?>
                     </table>
   <?php if(empty($idSubject)){
 
@@ -133,6 +148,12 @@ if (isset($_GET['course'])) {
     </div>
 </div>
 <?php require_once 'footer.php'; ?>
-
+<script>
+    $(function(){
+        $('tr:visible').click(function(){
+            $(this).next().toggle()
+        })
+    })
+</script>
 </body>
 </html>
