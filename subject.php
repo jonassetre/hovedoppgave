@@ -104,7 +104,7 @@ if (isset($_GET['course'])) {
                             <td style="width: 20%;">  <a class="btnNewQuestion" onclick="window.location.href='createQuestion.php';"> + Ny spørsmål</a>
                             </td>
                             <td style="width: 15%;">
-                                <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip" href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons" onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
                                 <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i class="material-icons" onclick="">&#xE872;</i></a>
                             </td>
                         </tr>
