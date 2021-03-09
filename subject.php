@@ -82,7 +82,7 @@ if (isset($_GET['course'])) {
                 <div id="firstCont">
                     <?php if(isset($idSubject)){ ?>
                         <div class="example-1">
-                            <a href="editSubject.php?course=<?php $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?>
+                            <a href="editSubject.php?course=<?php $subjectsById['idSubject'] ?>"><strong><?php echo $subjectsById['subjectCode'] . ' ' . $subjectsById['subjectTitle']; ?></strong>
                             </a>
                         </div>
                     <?php } ?>
@@ -128,7 +128,13 @@ if (isset($_GET['course'])) {
 
                         <?php }
                         }
-                        } else { echo "Vennligst velg et emne"; }?>
+                        } else {?>
+                        <div class="example-1">
+                            <h1><strong><?php echo "Vennligst velg et emne."; ?></strong></h1>
+                        </a>
+                </div>
+                        <?php
+} ?>
                     </table>
                     <div>
                     </div>
