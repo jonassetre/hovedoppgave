@@ -588,11 +588,11 @@ table {
 td,
 th {
     text-align: left;
-    padding: 10px;
+    padding: 8px;
 }
 
 td {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 th {
@@ -674,7 +674,26 @@ td a.delete {
 }
 .modal-content-subject {
     padding: 20px;
-    margin: 2% auto 2% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 2% auto 2% auto;
     border: 2px solid rgb(86, 149, 173);
     width: 350px;
+}
+table{
+    color: #3e7086;
+}
+table .small_text{
+    font-size: 11px;
+    margin: 0;
+    background-color: #b8d9e5;
+}
+
+td a.editQ {
+    color: #3e7086;
+    margin-left: 12px;
+
+}
+
+td a.deleteQ {
+    color: #ef5f55;
+    margin-left: 12px;
 }
