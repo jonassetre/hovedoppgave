@@ -9,17 +9,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once 'src/App.php';
-$method = $_SERVER['REQUEST_METHOD'];
 $User_idUser = $_SESSION['user_id'];
 $subjectsOfUserById = $app->getAllSubjectsOfUserById($User_idUser);
-
-
-$method = $_SERVER['REQUEST_METHOD'];
+$subjectsById = NULL;
 if (isset($_GET['course'])) {
     $idSubject = $_GET['course'];
     $subjectsById = $app->getSubjectBySubjectId($idSubject);
 }
-
 
 if (empty($idSubject)) {
     $hideDiv = 'style="display:none;';
@@ -118,8 +114,6 @@ if (empty($idSubject)) {
                         </tr>
 
                         <?php
-                        $method = $_SERVER['REQUEST_METHOD'];
-                        //echo $idGroup;
                         $idGroup = $group['idGroup'];
 
                         $questions = $app->getAllQuestionByGroupId($idGroup); ?>
