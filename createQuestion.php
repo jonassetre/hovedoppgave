@@ -19,19 +19,22 @@ if (isset($_POST['btnSaveQuestion'])){
        $score = $_POST[''];
 
        For gruppe trenger jeg en id fra url som f.eks /hovedoppgave/createQuestion.php?group=416
-       $idSubject = $_GET['course'];
+       $Group_idGroup = $_GET['group'];
+
        if(!empty($questContent) && !empty($diffDegree) && !empty($tag) && !empty($score) && !empty($Group_idGroup)){
-           $app->createQuestion($questContent, $diffDegree, $tag, $score, $idSubject);
+           $app->createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup);
        }
     */
 }
 ?>
+
 <?php
 require_once 'src/App.php';
 $method = $_SERVER['REQUEST_METHOD'];
-if (isset($_GET['course'])) {
-    $idSubject = $_GET['course'];
-    $data = $app->getSubjectBySubjectId($idSubject);
+if (isset($_GET['group'])) {
+    $idGroup = $_GET['group'];
+    $data = $app->getGroupByGroupId($idGroup);
+    var_dump($data);
 }
 ?>
 <!DOCTYPE html>
@@ -57,12 +60,9 @@ if (isset($_GET['course'])) {
 
         <div class="questionDown">
             <div class="form-p1">
-                <select id="dropdown1" name="dropdown" size="1">
-                    <option value="Group">Gruppe 1</option>
-                    <option value="Group">Gruppe 2</option>
-                    <option value="Group">Gruppe 3</option>
-                    <option value="Group">Gruppe 4</option>
-                </select>
+                <label>
+                    <input class="inputQuestionGroupName" type="text" name="inputQuestionGroupName" value="<?php echo $data['groupName'] ?>" >
+                </label>
 
                 <select id="dropdown2" name="dropdown" size="1">
                     <option value="Group">Enkel</option>

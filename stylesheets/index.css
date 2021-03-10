@@ -435,7 +435,18 @@ input[type=text].inputQuestionTagger {
     margin-left: 10px;
     margin-right: 10px;
 }
-
+input[type=text].inputQuestionGroupName {
+    width: 450px;
+    height: 34px;
+    padding: 8px 8px;
+    box-sizing: border-box;
+    border: 2px solid #4f90a9;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .footer {
     position: fixed;
     width: 100%;
