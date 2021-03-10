@@ -92,6 +92,19 @@ class App
             print $ex->getMessage() . PHP_EOL;
         }
     }
+
+    public function editGroup($idGroup, $groupName)
+    {
+        try {
+            $stmt = self::prepare("UPDATE `Group` SET `groupName`=:groupName where idGroup=:idGroup ");
+            $stmt->bindParam(":idGroup", $idGroup, PDO::PARAM_INT);
+            $stmt->bindParam(":groupName", $groupName, PDO::PARAM_STR);
+
+            $stmt->execute();
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
     #endregion
 
     #region Question
