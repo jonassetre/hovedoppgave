@@ -1,4 +1,32 @@
 <?php require_once 'header.php'; ?>
+
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
+<?php
+require_once 'src/App.php';
+if (isset($_POST['btnSaveQuestion'])){
+    /*
+       Trenger unike navn for disse
+       $questContent = $_POST[''];
+       $diffDegree = $_POST[''];
+       $tag = $_POST[''];
+       $score = $_POST[''];
+
+       For gruppe trenger jeg en id fra url som f.eks /hovedoppgave/createQuestion.php?group=416
+       $Group_idGroup = $_GET['group'];
+
+       if(!empty($questContent) && !empty($diffDegree) && !empty($tag) && !empty($score) && !empty($Group_idGroup)){
+           $app->createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup);
+       }
+    */
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

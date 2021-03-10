@@ -26,6 +26,7 @@ class App
         return self::$db->prepare($statement);
     }
 
+    #region Miscellaneous
     public function redirect($msg, $destination) {
         echo "<script type='text/javascript'>alert('$msg');location='$destination';</script>";
         return 0;
@@ -35,23 +36,8 @@ class App
         echo "<script type='text/javascript'>alert('$msg');</script>";
         return 0;
     }
+    #endregion
 
-    public function getUserIdFromSubjectCode($subjectCode){
-        $stmt = self::prepare('SELECT idSubject FROM Subject WHERE subjectCode=:subjectCode');
-        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchColumn();
-    }
-
-
-    public function getAllQuestionByGroupId($idGroup){
-
-        $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
-        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
 
     #region Answer
     #endregion
@@ -108,6 +94,28 @@ class App
     #endregion
 
     #region Question
+    public function createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup){
+        try {
+            $stmt = self::prepare("INSERT INTO Question (questContent, diff_degree, Tag, Score, GroupName_idGroup) VALUES (:questContent, :diffDegree, :tag, :score, :Group_idGroup)");
+            $stmt->bindParam(":questContent", $questContent, PDO::PARAM_STR);
+            $stmt->bindParam(":diffDegree", $diffDegree, PDO::PARAM_STR);
+            $stmt->bindParam(":tag", $tag, PDO::PARAM_STR);
+            $stmt->bindParam(":score", $score, PDO::PARAM_INT);
+            $stmt->bindParam(":Group_idGroup", $Group_idGroup, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
+
+    public function getAllQuestionByGroupId($idGroup){
+
+        $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
+        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
     #endregion
 
     #region Score
@@ -175,6 +183,13 @@ class App
         $stmt = self::prepare("DELETE FROM Subject WHERE idSubject = :idSubject");
         $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    public function getUserIdFromSubjectCode($subjectCode){
+        $stmt = self::prepare('SELECT idSubject FROM Subject WHERE subjectCode=:subjectCode');
+        $stmt->bindParam(':subjectCode', $subjectCode, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
     #endregion
 
