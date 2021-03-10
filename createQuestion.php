@@ -22,22 +22,19 @@
 
         <div class="questionDown">
             <div class="form-p1">
-                <label>
-                    <input class="inputQuestionName" type="text" name="inputQuestionName" placeholder="Navn...">
-                </label>
-
-                <select id="dropdown" name="dropdown" size="1">
+                <select id="dropdown1" name="dropdown" size="1">
                     <option value="Group">Gruppe 1</option>
                     <option value="Group">Gruppe 2</option>
                     <option value="Group">Gruppe 3</option>
                     <option value="Group">Gruppe 4</option>
                 </select>
 
-                <select id="dropdown" name="dropdown" size="1">
+                <select id="dropdown2" name="dropdown" size="1">
                     <option value="Group">Enkel</option>
                     <option value="Group">Middels</option>
                     <option value="Group">Høy</option>
                 </select>
+
                 <label>
                     <input class="inputQuestionPoeng" type="text" name="inputQuestionPoeng" placeholder="">
                     <span>poeng</span>
@@ -62,6 +59,10 @@
                     </div>
                     <script src="frontend/script.js"></script>
                 </div>
+                <label>
+                    <h4>#tagger <input class="inputQuestionTagger" type="text" name="inputQuestionTagger" required placeholder="Skriv minst et nøkkelord">
+                    </h4>
+                </label>
                 <div class="form-p3">
                     <h4>Svar:</h4>
                     <div id="editor">

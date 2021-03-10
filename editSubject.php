@@ -17,8 +17,6 @@ if(isset($_POST['update'])){
     if(!empty($subjectCode) && !empty($subjectTitle)){
         $app->updateSubject($idSubject, $subjectCode,$subjectTitle);
     }
-   // echo "<meta http-equiv='refresh' content='0;url=editSubject.php?course=$idSubject'>";
-
 }?>
 <?php
 require_once 'src/App.php';

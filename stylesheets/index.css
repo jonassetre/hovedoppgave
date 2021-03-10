@@ -391,7 +391,7 @@ input[type=text].inputQuestionName {
     transition: all 0.4s ease 0s;
 }
 
-#dropdown {
+#dropdown1, #dropdown2 {
     width: 150px;
     padding: 8px 7px;
     cursor: pointer;
@@ -403,11 +403,28 @@ input[type=text].inputQuestionName {
     color: #000000;
     margin-right: 30px;
     font-size: 14px;
+    margin-left: 10px;
     border: 2px solid #4f90a9;
+}
+
+#dropdown1{
+    width: 420px;
 }
 
 input[type=text].inputQuestionPoeng {
     width: 44px;
+    height: 34px;
+    padding: 8px 8px;
+    box-sizing: border-box;
+    border: 2px solid #4f90a9;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+input[type=text].inputQuestionTagger {
+    width: 85%;
     height: 34px;
     padding: 8px 8px;
     box-sizing: border-box;
