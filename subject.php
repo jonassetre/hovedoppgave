@@ -105,7 +105,7 @@ if (empty($idSubject)) {
                                 <?php echo $group['groupName']; ?>
                             </td>
                             <td style="width: 20%;"><a class="btnNewQuestion"
-                                                       onclick="window.location.href='createQuestion.php';"> + Ny
+                                                       href="createQuestion.php?course=<?= $subjectsById['idSubject'] ?>"> + Ny
                                     spørsmål</a>
                             </td>
                             <td style="width: 15%;">

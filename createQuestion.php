@@ -19,12 +19,19 @@ if (isset($_POST['btnSaveQuestion'])){
        $score = $_POST[''];
 
        For gruppe trenger jeg en id fra url som f.eks /hovedoppgave/createQuestion.php?group=416
-       $Group_idGroup = $_GET['group'];
-
+       $idSubject = $_GET['course'];
        if(!empty($questContent) && !empty($diffDegree) && !empty($tag) && !empty($score) && !empty($Group_idGroup)){
-           $app->createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup);
+           $app->createQuestion($questContent, $diffDegree, $tag, $score, $idSubject);
        }
     */
+}
+?>
+<?php
+require_once 'src/App.php';
+$method = $_SERVER['REQUEST_METHOD'];
+if (isset($_GET['course'])) {
+    $idSubject = $_GET['course'];
+    $data = $app->getSubjectBySubjectId($idSubject);
 }
 ?>
 <!DOCTYPE html>
