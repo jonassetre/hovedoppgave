@@ -29,6 +29,7 @@ if (empty($idSubject)) {
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Header</title>
     <script src="frontend/index.js"></script>
@@ -109,7 +110,7 @@ if (empty($idSubject)) {
                             </td>
                             <td style="width: 15%;">
                                 <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip"
-                                   href="editGroup.php?id=<?php echo $group['idGroup'] ?>"><i class="material-icons"
+                                   href="editGroup.php?id=<?php  echo $group['idGroup'] ?>"><i class="material-icons"
                                                                                               onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
                                 <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i
                                             class="material-icons" onclick="">&#xE872;</i></a>
@@ -118,7 +119,9 @@ if (empty($idSubject)) {
 
                         <?php
                         $method = $_SERVER['REQUEST_METHOD'];
-                        $idGroup = 526;
+                        //echo $idGroup;
+                        $idGroup = $group['idGroup'];
+
                         $questions = $app->getAllQuestionByGroupId($idGroup); ?>
 
                         <tr id="row1" style="DISPLAY: none">

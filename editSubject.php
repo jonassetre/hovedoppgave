@@ -6,7 +6,21 @@ require_once 'header.php';
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
-}
+}?>
+<?php
+require_once 'src/App.php';
+$method = $_SERVER['REQUEST_METHOD'];
+if(isset($_POST['update'])){
+    $subjectCode = $_POST['subjectCode'];
+    $subjectTitle = $_POST['subjectTitle'];
+    $idSubject = $_GET['course'];
+    if(!empty($subjectCode) && !empty($subjectTitle)){
+        $app->updateSubject($idSubject, $subjectCode,$subjectTitle);
+    }
+   // echo "<meta http-equiv='refresh' content='0;url=editSubject.php?course=$idSubject'>";
+
+}?>
+<?php
 require_once 'src/App.php';
 $method = $_SERVER['REQUEST_METHOD'];
 if (isset($_GET['course'])) {
@@ -15,18 +29,7 @@ if (isset($_GET['course'])) {
 }
 ?>
 
-<?php
-require_once 'src/App.php';
-$method = $_SERVER['REQUEST_METHOD'];
-if(isset($_POST['update'])){
-    $subjectCode = $_POST['subjectCode'];
-    $subjectTitle = $_POST['subjectTitle'];
-    if(!empty($subjectCode) && !empty($subjectTitle)){
-        $app->updateSubject($idSubject, $subjectCode,$subjectTitle);
-    }
-    echo "<meta http-equiv='refresh' content='0;url=editSubject.php?course=$idSubject'>";
 
-}?>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
