@@ -107,9 +107,10 @@ if (empty($idSubject)) {
                             <td style="width: 15%;">
                                 <a class="edit" title="Redigere  denne gruppe" data-toggle="tooltip"
                                    href="editGroup.php?id=<?php  echo $group['idGroup'] ?>"><i class="material-icons"
-                                                                                              onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
+                                                                                               onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
                                 <a class="delete" title="Slette denne gruppe" data-toggle="tooltip"><i
-                                            class="material-icons" onclick="">&#xE872;</i></a>
+                                            class="material-icons" onclick="popupDeleteGroup()">&#xE872;</i></a>
+                                <?php include 'deleteGroup.php'?>
                             </td>
                         </tr>
 
@@ -134,7 +135,7 @@ if (empty($idSubject)) {
                                                             onclick="window.location.href='createGroup.php';">&#xE254;</i></a>
                                                 <a class="deleteQ" title="Slette denne spørsmål"
                                                    data-toggle="tooltip"><i class="material-icons"
-                                                                            onclick="">&#xE872;</i></a>
+                                                                            onclick="window.location.href='deleteGroup.php';">&#xE872;</i></a>
                                             </td>
 
                                         </tr>                                <?php
