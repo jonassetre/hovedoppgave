@@ -122,6 +122,18 @@ class App
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    public function getQuestionByQuestionId($idQuestion){
+        try {
+            $stmt = self::prepare("select * from `Question` where idQuestion = :idQuestion");
+            $stmt->bindParam(":idQuestion", $idQuestion, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
     #endregion
 
     #region Score
