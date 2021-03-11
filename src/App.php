@@ -91,6 +91,12 @@ class App
             print $ex->getMessage() . PHP_EOL;
         }
     }
+
+    public function deleteGroup(int $idGroup) : bool {
+        $stmt = self::prepare("DELETE FROM Group WHERE idGroup = :idGroup");
+        $stmt->bindParam(":idGroup", $idGroup, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
     #endregion
 
     #region Question
