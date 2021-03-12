@@ -100,7 +100,7 @@ class App
     #endregion
 
     #region Question
-    public function createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup){
+    public function createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup, $answers){
         try {
             $stmt = self::prepare("INSERT INTO Question (questContent, diff_degree, Tag, Score, GroupName_idGroup) VALUES (:questContent, :diffDegree, :tag, :score, :Group_idGroup)");
             $stmt->bindParam(":questContent", $questContent, PDO::PARAM_STR);
@@ -108,9 +108,28 @@ class App
             $stmt->bindParam(":tag", $tag, PDO::PARAM_STR);
             $stmt->bindParam(":score", $score, PDO::PARAM_INT);
             $stmt->bindParam(":Group_idGroup", $Group_idGroup, PDO::PARAM_INT);
-            return $stmt->execute();
+            if(!$stmt->execute()){
+                return false;
+            }
+
+            $Question_idQuestion = self::$db->lastInsertId();
+            foreach ($answers as &$answer) {
+                $contentAnswer = $answer['content'];
+                $isCorrect = $answer['is_correct'];
+                $answerComment = $answer['comment'];
+                $stmt = self::prepare("INSERT INTO Answer(contentAnswer, isCorrect, answerComment, Question_idQuestion) VALUES (:contentAnswer, :isCorrect, :answerComment, :Question_idQuestion)");
+                $stmt->bindParam(":contentAnswer", $contentAnswer, PDO::PARAM_STR);
+                $stmt->bindParam(":isCorrect", $isCorrect, PDO::PARAM_BOOL);
+                $stmt->bindParam(":answerComment", $answerComment, PDO::PARAM_STR);
+                $stmt->bindParam(":Question_idQuestion", $Question_idQuestion, PDO::PARAM_INT);
+                if(!$stmt->execute()){
+                    return false;
+                }
+            }
+            return true;
         } catch (InvalidArgumentException $ex) {
             print $ex->getMessage() . PHP_EOL;
+            return false;
         }
     }
 

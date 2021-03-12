@@ -1,5 +1,6 @@
 <?php
 require_once 'src/App.php';
+require_once 'src/Model/Answer.php';
 require_once 'header.php';
 
 session_start();
@@ -15,30 +16,48 @@ if (isset($_GET['group'])) {
 }
 
 if (isset($_POST['btnSaveQuestion'])){
+
+    $ref_destination = 'subject.php?course=' . $data['Subject_idSubject'];
     if(!isset($_POST['inputQuestionDifficulty'])){
-        $app->redirect('Spørsmål mangler vanskelighetsgrad, kan ikke legge til i databasen.', 'subject.php?course=' . $data['Subject_idSubject']);
+        $app->redirect('Spørsmål mangler vanskelighetsgrad, kan ikke legge til i databasen.', $ref_destination);
+        return;
     }
     if(!isset($_POST['inputQuestionTagger'])){
-        $app->redirect('Spørsmål mangler tag, kan ikke legge til i databasen.', 'subject.php?course=' . $data['Subject_idSubject']);
+        $app->redirect('Spørsmål mangler tag, kan ikke legge til i databasen.', $ref_destination);
+        return;
     }
     if(!isset($_POST['inputQuestionPoeng'])){
-        $app->redirect('Spørsmål mangler poeng, kan ikke legge til i databasen.', 'subject.php?course=' . $data['Subject_idSubject']);
+        $app->redirect('Spørsmål mangler poeng, kan ikke legge til i databasen.', $ref_destination);
+        return;
     }
     if(!isset($_GET['group'])){
-        $app->redirect('Spørsmål tilhører ikke en gruppe, kan ikke legge til i databasen.', 'subject.php?course=' . $data['Subject_idSubject']);
+        $app->redirect('Spørsmål tilhører ikke en gruppe, kan ikke legge til i databasen.', $ref_destination);
+        return;
     }
 
-    $diffDegree = $_POST['inputQuestionDifficulty'];
+    if(!isset($_POST['inputAnswers'])){
+        $app->redirect('Spørsmål må ha minst et riktig og et galt svaralternativ, kan ikke legge til i databasen.', $ref_destination);
+        return;
+    }
+
+    $answers = json_decode($_POST['inputAnswers'], true);
+
+    if(count($answers) < 2){
+        $app->redirect('Spørsmål må ha minst et riktig og et galt svaralternativ, kan ikke legge til i databasen.', $ref_destination);
+        return;
+    }
+
+    $diffDegree = utf8_decode($_POST['inputQuestionDifficulty']);
     $tag = $_POST['inputQuestionTagger'];
     $score = $_POST['inputQuestionPoeng'];
     $Group_idGroup = $_GET['group'];
-    $questContent = $_POST['inputQuestionContent'];
+    $questContent = htmlspecialchars($_POST['inputQuestionContent']);
 
-    if( $app->createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup)){
-        $app->redirect('Nytt spørsmål ble lagt til.', 'subject.php?course=' . $data['Subject_idSubject']);
+    if($app->createQuestion($questContent, $diffDegree, $tag, $score, $Group_idGroup, $answers)){
+        $app->redirect('Nytt spørsmål ble lagt til.', $ref_destination);
     }
     else{
-        $app->redirect('Noe gikk galt, kunne ikke legge til spørsmål.', 'subject.php?course=' . $data['Subject_idSubject']);
+        $app->redirect('Noe gikk galt, kunne ikke legge til spørsmål.', $ref_destination);
     }
 }
 ?>
@@ -58,7 +77,7 @@ if (isset($_POST['btnSaveQuestion'])){
     </head>
 
     <body>
-        <form action="" name="createQuestionForm" id="createQuestionFormId" onsubmit="getTextEditorText()" method="post">
+        <form action="" name="createQuestionForm" id="createQuestionFormId" onsubmit="getTextEditorTextAndAnswers()" method="post">
             <div class="container">
                 <div class="question-container">
                     <div class="questionTop">
@@ -111,28 +130,30 @@ if (isset($_POST['btnSaveQuestion'])){
                                     <div id="correctAnswerForm">
                                         <div class="correctAnswer">
                                             <label for="name">Riktig svar</label>
-                                            <input class="inputQuestion" type="text" name="inputQuestion" placeholder="">
+                                            <input class="inputQuestion" type="text" name="inputQuestion"  required placeholder="">
 
                                             <label for="name">Kommentar </label>
-                                            <input class="inputComment" type="text" name="inputComment" placeholder="">
+                                            <input class="inputComment" type="text" name="inputComment"  placeholder="">
                                         </div>
                                     </div>
                                     <div id="wrongAnswerForm">
                                         <div class="wrongAnswer">
                                             <label for="name">Mulig svar</label>
-                                            <input class="inputQuestion" type="text" name="inputQuestion" placeholder="">
+                                            <input class="inputQuestion" type="text" name="inputQuestion" required placeholder="">
 
                                             <label for="name">Kommentar</label>
                                             <input class="inputComment" type="text" name="inputComment" placeholder="">
                                         </div>
                                     </div>
-
+                                    <!--
+                                    Vi har foreløpig ingenting i databasen for å lagre en slik kommentar, så jeg tar den ut for øyeblikket
                                     <div class="generellComment">
                                         <label for="name">Generelle kommentarer til
                                             testen</label>
                                         <input class="inputGenerellComment" type="text" name="inputGenerellComment"
                                                placeholder="">
                                     </div>
+                                    -->
                                     <div>
 
                                         <section id="page">
@@ -145,6 +166,8 @@ if (isset($_POST['btnSaveQuestion'])){
                                         </section>
                                     </div>
                                 </div>
+
+                                <input type="hidden" name="inputAnswers" id="inputAnswersId">
 
                                 <button id="btnSaveQuestion" type="submit" name="btnSaveQuestion">Lagre</button>
                                 <button id="btnCancel" type="button" name="button2"
@@ -161,9 +184,40 @@ if (isset($_POST['btnSaveQuestion'])){
         <script src="frontend/app.js"></script>
         </form>
         <script>
-            function getTextEditorText() {
+            class Answer {
+                content = "";
+                is_correct = false;
+                comment = "";
+                constructor(answerContent, answerComment, isCorrect) {
+                    this.content = answerContent;
+                    this.comment = answerComment;
+                    this.is_correct = isCorrect;
+                }
+            }
+            function getTextEditorTextAndAnswers() {
                 var content = document.getElementById('page').innerHTML;
                 document.getElementById('inputQuestionContentId').value = content;
+
+                var answers = [];
+
+                var correctAnswerForm =  document.getElementById('correctAnswerForm');
+                var allCorrectAnswerDivs = correctAnswerForm.getElementsByClassName('correctAnswer');
+                for(var i = 0; i < allCorrectAnswerDivs.length; i++) {
+                    var inputQuestion = allCorrectAnswerDivs[i].getElementsByClassName('inputQuestion');
+                    var inputComment = allCorrectAnswerDivs[i].getElementsByClassName('inputComment');
+                    console.log(i + ': ' + inputQuestion[0].value + ', ' + inputComment[0].value);
+                    answers.push(new Answer(inputQuestion[0].value, inputComment[0].value, 1));
+
+                }
+
+                var wrongAnswerForm =  document.getElementById('wrongAnswerForm');
+                var allWrongAnswerDivs = wrongAnswerForm.getElementsByClassName('wrongAnswer');
+                for(var i = 0; i < allWrongAnswerDivs.length; i++) {
+                    var inputQuestion = allWrongAnswerDivs[i].getElementsByClassName('inputQuestion');
+                    var inputComment = allWrongAnswerDivs[i].getElementsByClassName('inputComment');
+                    answers.push(new Answer(inputQuestion[0].value, inputComment[0].value, 0));
+                }
+                document.getElementById('inputAnswersId').value = JSON.stringify(answers);
             }
         </script>
         <script src="frontend/script.js"></script>
