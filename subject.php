@@ -22,6 +22,8 @@ if (empty($idSubject)) {
 } else {
     $hideDiv = "";
 } ?>
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -66,10 +68,14 @@ if (empty($idSubject)) {
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron" <?php echo $hideDiv; ?>>
                 <form>
-                    <label>
-                        <input class="search" type="text" name="search" placeholder="Finn spørsmål..">
-                    </label>
-                    <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
+                    <form action="" method="post">
+                        <label>
+                            <input class="search" type="text" name="searchterm" placeholder="Finn spørsmål..">
+                            <input type="submit"  name="submit" class="btnSearch" value="Søk" />
+                        </label>
+
+                        <a class="btnNewGroup" onclick="popUpNewGroup()"> + Ny spørsmålsgruppe</a>
+                    </form>
                 </form>
 
             </div>
@@ -127,7 +133,7 @@ if (empty($idSubject)) {
                                         <tr>
                                             <td style="width: 5%;"><input type="checkbox"/></td>
                                             <td style="width: 60%;"><?php echo $question['questContent']; ?></td>
-                                            <td style="width: 10%;"><?php echo $question['Score'] . ' poeng'; ?></td>
+                                            <td style="width: 10%;"><?php echo $question['score'] . ' poeng'; ?></td>
                                             <td style="width: 11%;"><?php echo $question['diff_degree']; ?></td>
                                             <td style="width: 14%;">
                                                 <a class="editQ" title="Redigere  denne spørsmål" data-toggle="tooltip"><i
@@ -138,7 +144,9 @@ if (empty($idSubject)) {
                                                                             onclick="window.location.href='deleteGroup.php';">&#xE872;</i></a>
                                             </td>
 
-                                        </tr>                                <?php
+                                        </tr>
+
+                                        <?php
                                     } ?>
                                 </table>
                             </td>
@@ -149,7 +157,6 @@ if (empty($idSubject)) {
                         } else { ?>
                             <div class="example-1">
                                 <h1><strong><?php echo "Vennligst velg et emne."; ?></strong></h1>
-
                             </div>
                             <?php
                         } ?>
@@ -160,7 +167,7 @@ if (empty($idSubject)) {
 
                 <div id="secondCont">
                     <ul>
-                        <li><a href="#">Tester</a></li>
+                        <li><a href="quizzes.php?course=<?= $subjectsById['idSubject'] ?>">Tester</a></li>
                         <li><a href="#">Importere</a></li>
                         <li><a href="#">Eksportere</a></li>
                         <li><a href="editSubject.php?course=<?= $subjectsById['idSubject'] ?>">Personer</a></li>

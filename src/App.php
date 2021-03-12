@@ -133,6 +133,17 @@ class App
         }
     }
 
+    public function getAllQuestionBySubjectId($id_subject, $idGroup){
+
+        $stmt = self::prepare("SELECT * FROM `Question`
+                                            INNER JOIN `Group` ON Question.GroupName_idGroup = idGroup 
+                                                    WHERE Subject_idSubject=:idSubject");
+        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
+        $stmt->bindParam(':id_subject', $id_subject, PDO::PARAM_INT);
+        $stmt->execute();
+        return   $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getAllQuestionByGroupId($idGroup){
 
         $stmt = self::prepare("SELECT * FROM `Question`  WHERE `GroupName_idGroup` =:GroupName_idGroup");
@@ -142,20 +153,39 @@ class App
 
     }
 
-    public function getQuestionByQuestionId($idQuestion){
-        try {
-            $stmt = self::prepare("select * from `Question` where idQuestion = :idQuestion");
-            $stmt->bindParam(":idQuestion", $idQuestion, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetch();
+    public function getAllTagsInAllQuestions(string $tag){
 
-        } catch (InvalidArgumentException $ex) {
-            print $ex->getMessage() . PHP_EOL;
-        }
+        $stmt = self::prepare("SELECT * FROM `Question`  WHERE Tag LIKE '%$tag%' ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     }
+    public function findTaggerBySubjectId($tag, $id_subject, $idGroup){
+
+        $stmt = self::prepare("SELECT * FROM `Question`
+                                            INNER JOIN `Group` ON Question.GroupName_idGroup = idGroup 
+                                                    WHERE `tag` LIKE '%$tag%' AND Subject_idSubject=:idSubject");
+        $stmt->bindParam(":GroupName_idGroup", $idGroup, PDO::PARAM_INT);
+        $stmt->bindParam(':id_subject', $id_subject, PDO::PARAM_INT);
+        $stmt->execute();
+        return   $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
     #endregion
 
     #region Score
+    public function getMaxScoreOfTest(int $test_id)  {
+
+        $stmt = self::prepare(" SELECT SUM(`Score`) as score_sum
+    FROM Question JOIN Test_has_Question 
+             On Question.idQuestion = Test_has_Question.question_id WHERE Test_has_Question.test_id = :test_id");
+        $stmt->bindParam(":test_id", $test_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = (int)$stmt->fetchColumn();
+        return $count;
+    }
     #endregion
 
     #region Subject
@@ -231,6 +261,36 @@ class App
     #endregion
 
     #region Test
+    public function getAllTestsBySubjectId($idSubject){
+
+        $stmt = self::prepare("SELECT * FROM `Test`  WHERE `Subject_idSubject` =:Subject_idSubject");
+        $stmt->bindParam(":Subject_idSubject", $idSubject, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function createTest( $testname, $Question_id, $idSubject){
+        try {
+            $stmt = self::prepare("INSERT INTO Test (testName, Question_id, Subject_idSubject) VALUES (:testName, :Question_id, :Subject_idSubject)");
+            $stmt->bindParam(":testName", $testname);
+            $stmt->bindParam(":Question_id", $Question_id, PDO::PARAM_INT);
+            $stmt->bindParam(":idSubject", $idSubject, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (InvalidArgumentException $ex) {
+            print $ex->getMessage() . PHP_EOL;
+        }
+    }
+
+
+    public function countQuestionsInTest(int $test_id)  {
+        $stmt = self::prepare("SELECT COUNT(*) AS num_rows FROM Test_has_Question WHERE  `test_id`= :test_id");
+        $stmt->bindParam(":test_id", $test_id);
+        $stmt -> execute();
+        $count = (int)$stmt->fetchColumn();
+        return $count;
+    }
+
     #endregion
 
     #region User
